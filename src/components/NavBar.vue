@@ -17,15 +17,15 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn icon route to="/">
+        <v-btn icon @click="goHome()">
           <v-icon>mdi-home-outline</v-icon>
         </v-btn>
 
-        <v-btn icon>
+        <v-btn icon @click="goInbox()">
           <v-icon>mdi-send-outline</v-icon>
         </v-btn>
 
-        <v-btn icon>
+        <v-btn icon @click="goExplore()">
           <v-icon>mdi-compass-outline</v-icon>
         </v-btn>
 
@@ -90,6 +90,18 @@ export default {
       {divider: true },
       {icon: '',name: 'Log Out',}
     ]
-  })
+  }),
+
+  methods:{
+    goHome(){
+      this.$router.push('/');
+    },
+    goInbox(){
+      this.$router.push('/direct/inbox');
+    },
+    goExplore(){
+      this.$router.push('/explore');
+    }
+  }
 }
 </script>
