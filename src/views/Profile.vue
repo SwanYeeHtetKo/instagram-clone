@@ -138,10 +138,10 @@
 </template>
 
 <script>
-import ViewMyPost from '@/components/ViewMyPost'
-import IGTV from '@/components/Igtv'
-import Save from '@/components/Save'
-import Tagged from '@/components/Tagged'
+import ViewMyPost from '@/components/profile/ViewMyPost'
+import IGTV from '@/components/profile/Igtv'
+import Save from '@/components/profile/Save'
+import Tagged from '@/components/profile/Tagged'
   export default {
     components:{
         ViewMyPost,
