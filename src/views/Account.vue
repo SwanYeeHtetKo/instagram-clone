@@ -2,12 +2,16 @@
     <div>
         <v-card>
             <v-tabs vertical color="dark">
-                <v-tab v-for="item in tabs" :key="item" :href="`/profile/#${item}`">                    
+                <v-tab class="text-capitalize" v-for="item in tabs" :key="item" :href="`/profile/#${item}`">                    
                     {{item}}
                 </v-tab>                
 
                 <v-tab-item v-for="item in tabs" :key="item" :value="`/profile/${item}`">
-                    <tabsComponents v-show="item == component.link" v-for="component in tabsComponents" :key="component.name" :is="component.name"  />
+                    <v-card flat class="mr-12 ml-12">
+                        <v-card-text>
+                            <tabsComponents v-show="item == component.link" v-for="component in tabsComponents" :key="component.name" :is="component.name"  />
+                        </v-card-text>
+                    </v-card>
                 </v-tab-item>
                 </v-tabs>
         </v-card>
