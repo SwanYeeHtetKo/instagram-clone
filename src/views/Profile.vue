@@ -17,9 +17,7 @@
                     </v-col>
                     <v-col>
                         <v-btn class="text-capitalize" outlined depressed>Edit Profile</v-btn>
-                    </v-col>
-                    <v-col>
-                        <v-btn icon>
+                        <v-btn icon @click="openSettingDialog = true">
                             <v-icon>mdi-cog-outline</v-icon>
                         </v-btn>
                     </v-col>
@@ -53,59 +51,88 @@
             </v-row>
             <hr/>
         </div>
-
+        
         <!-- user data -->
         <template>
             <v-tabs
-            v-model="tab"
+            v-model="tabId"
             background-color="transparent"
             centered
             >
                 <v-tabs-slider color="black"></v-tabs-slider>
 
-                <v-tab href="#tab-1">
+                <v-tab :href="`/profile/#post`">
                     <v-icon class="mr-2">mdi-post-outline</v-icon>
                     Posts
                 </v-tab>
 
-                <v-tab href="#tab-2">
+                <v-tab :href="`/profile/#channel`">
                     <v-icon class="mr-2">mdi-television-classic</v-icon>
                     IGTV                    
                 </v-tab>
 
-                <v-tab href="#tab-3">
+                <v-tab :href="`/profile/#saved`">
                     <v-icon class="mr-2">mdi-content-save-outline</v-icon>
                     Saved                    
                 </v-tab>
 
-                <v-tab href="#tab-4">
+                <v-tab :href="`/profile/#tagged`">
                     <v-icon class="mr-2">mdi-clipboard-account-outline</v-icon>
                     Tagged                    
                 </v-tab>
             </v-tabs>
 
-            <v-tabs-items style="background-color:transparent" v-model="tab" >
-                <v-tab-item value="tab-1">
+            <v-tabs-items style="background-color:transparent" v-model="tabId" >
+                <v-tab-item :value="`/profile/post`">
                     <v-container>
                         <ViewMyPost/>
                     </v-container>
                 </v-tab-item>
-                <v-tab-item value="tab-2">
+                <v-tab-item :value="`/profile/channel`">
                     <v-container>
                         <IGTV/>
                     </v-container>
                 </v-tab-item>
-                <v-tab-item value="tab-3">
+                <v-tab-item :value="`/profile/saved`">
                     <v-container>
                         <Save/>
                     </v-container>
                 </v-tab-item>
-                <v-tab-item value="tab-4">
+                <v-tab-item :value="`/profile/tagged`">
                     <v-container>
                         <Tagged/>
                     </v-container>
                 </v-tab-item>
             </v-tabs-items>
+        </template>
+
+        <!-- Setting Dialog -->
+        <template>
+            <div class="text-center">
+                <v-dialog
+                v-model="openSettingDialog"
+                width="500"
+                >               
+
+                <v-card>
+                    <v-list flat>
+                        <v-list-item-group
+                        >
+                        <template v-for="(item, i) in settingBox">
+                            <v-divider v-if="item.text && i != 0" :key="i"></v-divider>
+                            <v-list-item
+                            :key="i"
+                            >
+                            <v-list-item-content>
+                                <v-list-item-title  v-text="item.text" class="text-center"></v-list-item-title>
+                            </v-list-item-content>                  
+                            </v-list-item>
+                            </template>
+                        </v-list-item-group>
+                    </v-list>
+                </v-card>
+                </v-dialog>
+            </div>
         </template>
     </div>
 </template>
@@ -124,9 +151,22 @@ import Tagged from '@/components/Tagged'
     },
     data () {
       return {
-        tab: null,
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        tabId: '/profile/'+this.$route.params.id,
+        openSettingDialog: false,
+        settingBox: [
+            {text: 'Change Password'},
+            {text: 'Nametag'},
+            {text: 'Apps and Websites'},
+            {text: 'Notifications'},
+            {text: 'Privacy and Security'},
+            {text: 'Login Activity'},
+            {text: 'Emails and Instagram'},
+            {text: 'Report a Problem'},
+            {text: 'Log Out'},
+            {text: 'Cancel'}
+        ]
       }
     },
+
   }
 </script>

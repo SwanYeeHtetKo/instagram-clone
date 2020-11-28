@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <v-row>
-      <v-col cols="12" xs="12" sm="12" md="12" lg="6" class="offset-lg-1">
+      <v-col cols="12" xs="12" sm="12" md="12" lg="7">
         <!-- Story -->
         <v-card flat>
           <v-card-text>
@@ -89,7 +89,7 @@
         
         <v-list dense two-line style="position:fixed;margin-top:90px" color="grey lighten-3" width="440">
             <div class="d-flex justify-space-between">
-              <div class="text--disabled font-weight-bold">
+              <div class="text--disabled ml-3 font-weight-bold">
               Suggestions For You
               </div>
               <div>

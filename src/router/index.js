@@ -29,10 +29,15 @@ const routes = [
     component: () => import('../views/Explore.vue')
   },
   {
-    path: '/profile',
+    path: '/profile/:id',
     name: 'Profile',
     component: () => import('../views/Profile.vue')
-  }
+  },
+  {
+    path: '/account/:id',
+    name: 'Account',
+    component: () => import('../views/Account.vue')
+  },
 ]
 
 const router = new VueRouter({
