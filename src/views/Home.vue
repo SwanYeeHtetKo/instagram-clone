@@ -5,7 +5,7 @@
         <!-- Story -->
         <v-card style="border: 1px solid rgba(0,0,0,0.2)" flat>
           <v-card-text>
-            <div class="d-flex" style="overflow:auto">
+            <div class="d-flex ma-3" style="overflow:auto">
             <v-avatar              
               v-for="n in 5"
               :key="n"
@@ -70,7 +70,7 @@
         <v-list dense two-line color="grey lighten-3" style="position:fixed;" width="440">
           <v-list-item link>
             <v-list-item-avatar size="50">
-              <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+              <v-img src="@/assets/avatar.jpg"></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title class="title">
@@ -155,27 +155,27 @@
         {
           avatar: 'https://picsum.photos/200/300?random=1',
           title: 'Brunch this weekend?',
-          subtitle: `Swan Yee Htet Ko`,
+          subtitle: `Follows you`,
         },
         {
           avatar: 'https://picsum.photos/200/300?random=2',
           title: 'Swan Yee Htet Ko',
-          subtitle: `Swan Yee Htet Ko`,
+          subtitle: `New to instagram`,
         },
         {
           avatar: 'https://picsum.photos/200/300?random=3',
           title: 'Oui oui',
-          subtitle: 'Swan Yee Htet Ko',
+          subtitle: 'Followed by sabalphyu98',
         },
         {
           avatar: 'https://picsum.photos/200/300?random=4',
           title: 'Birthday gift',
-          subtitle: 'Swan Yee Htet Ko',
+          subtitle: 'Suggested for you',
         },
         {
           avatar: 'https://picsum.photos/200/300?random=5',
           title: 'Recipe to try',
-          subtitle: 'Swan Yee Htet Ko',
+          subtitle: 'Followed by yeir_min',
         },
       ],
       postSettingsList:[

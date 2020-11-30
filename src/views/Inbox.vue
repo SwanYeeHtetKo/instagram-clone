@@ -11,7 +11,7 @@
                     <v-list>
                         <v-list-item two-line>
                             <v-list-item-avatar>
-                                <v-img src="https://cdn.vuetifyjs.com/images/john.png"/>
+                                <v-img src="https://picsum.photos/200/300?random"/>
                             </v-list-item-avatar>
                             <v-list-item-content>
                                 <v-list-item-title>Two-line item</v-list-item-title>

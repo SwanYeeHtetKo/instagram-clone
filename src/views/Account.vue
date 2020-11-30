@@ -2,7 +2,7 @@
     <div>
         <v-card flat style="border: 1px solid rgba(0,0,0,0.2)">
             <v-tabs  vertical color="dark" >
-                <v-tab class="text-capitalize" v-for="item in tabs" :key="item" :href="`/profile/#${item}`">                    
+                <v-tab class="text-capitalize hidden-sm-and-down" v-for="item in tabs" :key="item" :href="`/profile/#${item}`">                    
                     {{item}}
                 </v-tab>                
 

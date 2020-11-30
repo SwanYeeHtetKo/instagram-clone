@@ -4,18 +4,18 @@
         <v-row>
             <v-col cols="4">
                 <v-row justify="center">
-                <v-avatar size="150" >
-                    <v-img  src="https://cdn.vuetifyjs.com/images/john.png"/>
-                </v-avatar>
+                    <v-avatar size="150" >
+                        <v-img  src="@/assets/avatar.jpg"/>
+                    </v-avatar>
                 </v-row>
             </v-col>
 
-            <v-col cols="8">
+            <v-col cols="8" xs="7" sm="7" lg="8">
                 <v-row>
-                    <v-col>
-                        <div class="text-h4">swan_yee_htet_ko</div>
+                    <v-col cols="12" xs="12" sm="12" md="6" lg="5">
+                        <div :style="[$vuetify.breakpoint.xs ?{'max-width':'200px'}:{}]" class="text-h4 d-inline-block text-truncate">swan_yee_htet_ko</div>
                     </v-col>
-                    <v-col>
+                    <v-col class="ml-2">
                         <v-btn class="text-capitalize" outlined depressed>Edit Profile</v-btn>
                         <v-btn icon @click="openSettingDialog = true">
                             <v-icon>mdi-cog-outline</v-icon>
@@ -54,7 +54,7 @@
         
         <!-- user data -->
         <template>
-            <v-tabs
+            <v-tabs show-arrows
             v-model="tabId"
             background-color="transparent"
             centered

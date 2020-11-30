@@ -9,24 +9,55 @@
 
       <v-container class="py-0 fill-height">
         
-        <img width="100" style="cursor:pointer" @click="startProgram()" src="@/assets/735145cfe0a4.png"/>
+        <v-img :style="[$vuetify.breakpoint.smAndDown ?{'max-width':'50px'}:{}]" max-width="100" style="cursor:pointer" @click="startProgram()" src="@/assets/735145cfe0a4.png"/>
         
         <v-responsive max-width="260" class="offset-md-3">
-            <v-text-field outlined single-line hide-details="auto" clearable label="Search" dense class="hidden-sm-and-down"></v-text-field>
+            <v-autocomplete
+            prepend-inner-icon="mdi-magnify"
+            item-text="name"
+            :loading="isLoading"
+            :search-input.sync="search"
+            v-model="user" 
+            :items="users" 
+            append-icon="" 
+            outlined 
+            single-line
+            hide-no-data 
+            hide-details="auto" 
+            clearable 
+            label="Search" 
+            dense 
+            class="hidden-sm-and-down">
+              <template v-slot:item="{ item }">
+                <v-list-item-avatar
+                  color="indigo"
+                  class="headline font-weight-light white--text"
+                >
+                  <v-img :src="item.avatar"/>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.name"></v-list-item-title>
+                  <v-list-item-subtitle v-text="item.userName"></v-list-item-subtitle>
+                </v-list-item-content>
+              </template>
+            </v-autocomplete>
         </v-responsive>
 
         <v-spacer></v-spacer>
 
         <v-btn icon @click="goHome()">
-          <v-icon>mdi-home-outline</v-icon>
+          <v-icon v-if="$route.path == '/'">mdi-home</v-icon>
+          <v-icon v-else>mdi-home-outline</v-icon>
         </v-btn>
 
         <v-btn icon @click="goInbox()">
-          <v-icon>mdi-send-outline</v-icon>
+          <v-icon v-if="$route.path == '/direct/inbox'">mdi-send</v-icon>
+          <v-icon v-else>mdi-send-outline</v-icon>
         </v-btn>
 
         <v-btn icon @click="goExplore()">
-          <v-icon>mdi-compass-outline</v-icon>
+          <v-icon v-if="$route.path == '/explore'">mdi-compass</v-icon>
+          <v-icon v-else>mdi-compass-outline</v-icon>
         </v-btn>
 
         <v-menu offset-y>
@@ -79,7 +110,7 @@
                 color="primary"
                 size="25"
               >
-              <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+              <v-img src="@/assets/avatar.jpg"></v-img>
               </v-avatar>
             </v-btn>
           </template>
@@ -125,8 +156,38 @@ export default {
       { avatar: 'https://picsum.photos/200/300?random=2',title: 'Your friend John Smith is on Instagram as john_smith1997', suggestion: 'suggestion for you', date: '6w',data: null},
       { avatar: 'https://picsum.photos/200/300?random=3',title: 'pearl_twal', suggestion: 'liked your photo', date: '8w' ,data: 'https://picsum.photos/seed/picsum/200/300'},
       { avatar: 'https://picsum.photos/200/300?random=4',title: 'wuro_bmm33', suggestion: 'liked your photo', date: '8w', data: 'https://picsum.photos/id/237/200/300'},
+    ],
+    user: null,
+    search: null,
+    isLoading: false,
+    users:[],
+    usersFromApi:[
+      {avatar: 'https://picsum.photos/200/300?random=1',name: 'sabalphyu98',userName: 'Sabal Phyu'},
+      {avatar: 'https://picsum.photos/200/300?random=2',name: 'thandar_maung_maung',userName: 'maung'},
+      {avatar: 'https://picsum.photos/200/300?random=3',name: 'zwellpyae.black.boy.1',userName: 'Thu Rein Maung'},
+      {avatar: 'https://picsum.photos/200/300?random=4',name: 'wuro_bmm33',userName: 'Bhone Myint Myat'},
+      {avatar: 'https://picsum.photos/200/300?random=5',name: 'pearl_twal',userName: 'Pearl Twal'},
+      {avatar: 'https://picsum.photos/200/300?random=6',name: 'taylorswift',userName: 'Taylor Swift'},
     ]
   }),
+
+  watch: {
+
+    search (val) {
+      if(!val){
+        this.users = []
+      }else{
+        this.isLoading = true
+        // Lazily load input items
+        setTimeout(() => {
+          this.users = this.usersFromApi
+          this.isLoading = false
+        },500)
+      }
+      
+    },
+    
+  },
 
   methods:{
     startProgram(){
@@ -152,7 +213,9 @@ export default {
       }else{
         this.$router.push('/explore');
       }
-    }
+    },
+
+  
   }
 }
 </script>

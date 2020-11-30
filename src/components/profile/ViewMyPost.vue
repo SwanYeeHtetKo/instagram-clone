@@ -1,31 +1,29 @@
 <template>
     <div>
-        <div >
-            <v-row>
-                <template v-for="(n, i) in 30">
-                    <v-col cols="12" xs="12" sm="12" md="4" flat :key="i">
-                        
-                        <v-hover v-slot="{ hover }">
-                            <v-card flat @click="openDialog(`https://picsum.photos/500/300?random=${n * 3 + 10}`)">
-                                <v-img :src="`https://picsum.photos/500/300?random=${n * 3 + 10}`">
-                                
-                                <div v-if="hover" style="background-color:rgba(0,0,0,0.3);height:100%">
-                                    <v-row justify="center" align="center" style="height:100%">
-                                        <div>
-                                            <v-icon color="white">mdi-heart</v-icon> <span style="color:white">15</span>
-                                            <v-icon color="white" class="ml-5">mdi-message</v-icon> <span style="color:white">6</span>
-                                        </div>
-                                    </v-row>                                    
-                                </div>
-                                
-                                </v-img>
-                            </v-card>
-                        </v-hover>                      
-                        
-                    </v-col>
-                </template>
-            </v-row>            
-        </div>
+        <v-row>
+            <template v-for="(n, i) in 30">
+                <v-col cols="12" xs="12" sm="12" md="4" flat :key="i">
+                    
+                    <v-hover v-slot="{ hover }">
+                        <v-card flat @click="openDialog(`https://picsum.photos/500/300?random=${n * 3 + 10}`)">
+                            <v-img :src="`https://picsum.photos/500/300?random=${n * 3 + 10}`">
+                            
+                            <div v-if="hover" style="background-color:rgba(0,0,0,0.3);height:100%">
+                                <v-row justify="center" align="center" style="height:100%">
+                                    <div>
+                                        <v-icon color="white">mdi-heart</v-icon> <span style="color:white">15</span>
+                                        <v-icon color="white" class="ml-5">mdi-message</v-icon> <span style="color:white">6</span>
+                                    </div>
+                                </v-row>                                    
+                            </div>
+                            
+                            </v-img>
+                        </v-card>
+                    </v-hover>                      
+                    
+                </v-col>
+            </template>
+        </v-row>
 
         <!-- full image dialog -->
         <v-dialog v-model="fullImageDialog" max-width="900">
