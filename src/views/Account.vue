@@ -1,7 +1,7 @@
 <template>
     <div>
-        <v-card>
-            <v-tabs vertical color="dark">
+        <v-card flat style="border: 1px solid rgba(0,0,0,0.2)">
+            <v-tabs  vertical color="dark" >
                 <v-tab class="text-capitalize" v-for="item in tabs" :key="item" :href="`/profile/#${item}`">                    
                     {{item}}
                 </v-tab>                
@@ -68,3 +68,9 @@ export default {
     })
 }
 </script>
+
+<style scoped>
+>>>.v-slide-group__wrapper{
+    border-right: 1px solid rgba(0,0,0,0.2)!important
+}
+</style>

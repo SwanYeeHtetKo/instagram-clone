@@ -47,11 +47,12 @@
                     <v-img :src="item.avatar"></v-img>
                   </v-list-item-avatar>
                   <v-list-item-content>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
-                    <v-list-item-subtitle>{{item.suggestion}}</v-list-item-subtitle>
+                    <v-list-item-title class="font-weight-bold">{{ item.title }}</v-list-item-title>
+                    <v-list-item-subtitle class="text--primary font-weight-regular">{{item.suggestion}} <span class="text--secondary">{{item.date}}</span></v-list-item-subtitle>
                   </v-list-item-content>
                   <v-list-item-action>
-                    <v-btn color="#0195f6" small depressed dark>
+                    <v-img width="50" height="50" v-if="item.data" :src="item.data"/>
+                    <v-btn color="#0195f6" v-else small depressed dark>
                       Follow
                     </v-btn>
                   </v-list-item-action>
@@ -120,10 +121,10 @@ export default {
       {icon: '',name: 'Log Out',}
     ],
     notifications: [
-      { avatar: 'https://cdn.vuetifyjs.com/images/john.png',title: 'Click Me', suggestion: 'start following you'},
-      { avatar: 'https://cdn.vuetifyjs.com/images/john.png',title: 'Click Me', suggestion: 'start following you'},
-      { avatar: 'https://cdn.vuetifyjs.com/images/john.png',title: 'Click Me', suggestion: 'start following you' },
-      { avatar: 'https://cdn.vuetifyjs.com/images/john.png',title: 'Click Me 2', suggestion: 'start following you' },
+      { avatar: 'https://picsum.photos/200/300?random=1',title: 'john_w', suggestion: 'started following you', date: '3w',data: null},
+      { avatar: 'https://picsum.photos/200/300?random=2',title: 'Your friend John Smith is on Instagram as john_smith1997', suggestion: 'suggestion for you', date: '6w',data: null},
+      { avatar: 'https://picsum.photos/200/300?random=3',title: 'pearl_twal', suggestion: 'liked your photo', date: '8w' ,data: 'https://picsum.photos/seed/picsum/200/300'},
+      { avatar: 'https://picsum.photos/200/300?random=4',title: 'wuro_bmm33', suggestion: 'liked your photo', date: '8w', data: 'https://picsum.photos/id/237/200/300'},
     ]
   }),
 

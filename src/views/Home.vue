@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" xs="12" sm="12" md="12" lg="7">
         <!-- Story -->
-        <v-card flat>
+        <v-card style="border: 1px solid rgba(0,0,0,0.2)" flat>
           <v-card-text>
             <div class="d-flex" style="overflow:auto">
             <v-avatar              
@@ -21,13 +21,13 @@
 
         <!-- New Feed -->
 
-        <v-card class="mt-12" v-for="n in 10" flat :key="n">
+        <v-card class="mt-12" style="border: 1px solid rgba(0,0,0,0.2)" v-for="n in 10" flat :key="n">
           <v-toolbar elevation="0">
             <v-avatar
               color="primary"
               size="35"
             >
-            <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+            <v-img :src="`https://picsum.photos/200/300?random=${n * 2 }`"></v-img>
             </v-avatar>
             <v-toolbar-title class="ml-5">John Smith</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -35,7 +35,7 @@
               <v-icon>mdi-dots-horizontal</v-icon>
             </v-btn>
           </v-toolbar>
-          <v-img :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"/>
+          <v-img :src="`https://picsum.photos/500/300?random=${n * 4 + 10}`"/>
           <v-card-text>
             <v-btn icon>
               <v-icon>mdi-heart-outline</v-icon>
@@ -131,7 +131,7 @@
               <template v-for="(item, i) in postSettingsList">
                 <v-divider v-if="item.text && i != 0" :key="i"></v-divider>
                 <v-list-item
-                  :key="i"
+                  :key="item.text"
                 >
                   <v-list-item-content>
                     <v-list-item-title :style="[item.text == 'Report' || item.text == 'Unfollow' ? {'color': 'red'}: {'color': 'black'}]" v-text="item.text" class="text-center"></v-list-item-title>
@@ -153,27 +153,27 @@
       postSettings: false,
       items: [
         {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+          avatar: 'https://picsum.photos/200/300?random=1',
           title: 'Brunch this weekend?',
           subtitle: `Swan Yee Htet Ko`,
         },
         {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+          avatar: 'https://picsum.photos/200/300?random=2',
           title: 'Swan Yee Htet Ko',
           subtitle: `Swan Yee Htet Ko`,
         },
         {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+          avatar: 'https://picsum.photos/200/300?random=3',
           title: 'Oui oui',
           subtitle: 'Swan Yee Htet Ko',
         },
         {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
+          avatar: 'https://picsum.photos/200/300?random=4',
           title: 'Birthday gift',
           subtitle: 'Swan Yee Htet Ko',
         },
         {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
+          avatar: 'https://picsum.photos/200/300?random=5',
           title: 'Recipe to try',
           subtitle: 'Swan Yee Htet Ko',
         },
