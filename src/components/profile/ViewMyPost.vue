@@ -6,8 +6,23 @@
                     
                     <v-hover v-slot="{ hover }">
                         <v-card flat @click="openDialog(`https://picsum.photos/500/300?random=${n * 3 + 10}`)">
-                            <v-img :src="`https://picsum.photos/500/300?random=${n * 3 + 10}`">
-                            
+                            <v-img 
+                            class="grey lighten-2"
+                            :lazy-src="`https://picsum.photos/500/300?random=${n * 3 + 10}`"
+                            aspect-ratio="1" 
+                            :src="`https://picsum.photos/500/300?random=${n * 3 + 10}`">
+                            <template v-slot:placeholder>
+                                <v-row
+                                class="fill-height ma-0"
+                                align="center"
+                                justify="center"
+                                >
+                                <v-progress-circular
+                                    indeterminate
+                                    color="grey lighten-5"
+                                ></v-progress-circular>
+                                </v-row>
+                            </template>
                             <div v-if="hover" style="background-color:rgba(0,0,0,0.3);height:100%">
                                 <v-row justify="center" align="center" style="height:100%">
                                     <div>
@@ -37,7 +52,24 @@
                             <v-list dense two-line>
                                 <v-list-item>
                                     <v-list-item-avatar size="50">
-                                    <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+                                    <v-img 
+                                    class="grey lighten-2"
+                                    lazy-src="@/assets/avatar.jpg"
+                                    aspect-ratio="1" 
+                                    src="@/assets/avatar.jpg">
+                                        <template v-slot:placeholder>
+                                            <v-row
+                                            class="fill-height ma-0"
+                                            align="center"
+                                            justify="center"
+                                            >
+                                            <v-progress-circular
+                                                indeterminate
+                                                color="grey lighten-5"
+                                            ></v-progress-circular>
+                                            </v-row>
+                                        </template>
+                                    </v-img>
                                     </v-list-item-avatar>
                                     <v-list-item-content>
                                     <v-list-item-title class="title">

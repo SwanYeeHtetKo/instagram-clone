@@ -75,14 +75,46 @@
                   :key="item.title"
                 >
                   <v-list-item-avatar>
-                    <v-img :src="item.avatar"></v-img>
+                    <v-img class="grey lighten-2"
+                    :lazy-src="item.avatar"
+                    aspect-ratio="1" :src="item.avatar">
+                      <template v-slot:placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-progress-circular
+                            indeterminate
+                            color="grey lighten-5"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
                   </v-list-item-avatar>
                   <v-list-item-content>
                     <v-list-item-title class="font-weight-bold">{{ item.title }}</v-list-item-title>
                     <v-list-item-subtitle class="text--primary font-weight-regular">{{item.suggestion}} <span class="text--secondary">{{item.date}}</span></v-list-item-subtitle>
                   </v-list-item-content>
                   <v-list-item-action>
-                    <v-img width="50" height="50" v-if="item.data" :src="item.data"/>
+                    <v-img 
+                    class="grey lighten-2"
+                    :lazy-src="item.avatar"
+                    aspect-ratio="1" 
+                    width="50" height="50" v-if="item.data" :src="item.data">
+                      <template v-slot:placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-progress-circular
+                            indeterminate
+                            color="grey lighten-5"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
                     <v-btn color="#0195f6" v-else small depressed dark>
                       Follow
                     </v-btn>
@@ -122,7 +154,7 @@
             <template v-for="item in userDropDown">
               <v-divider  v-if="item.divider" :key="item.icon"></v-divider>
             
-              <v-list-item v-else :key="item.name" route :to="item.link"
+              <v-list-item v-else :key="item.name" @click ="() => {goToLink(item.link)}"
               >
                 <v-list-item-icon v-if="item.icon">
                   <v-icon v-text="item.icon"></v-icon>
@@ -137,6 +169,88 @@
         </v-menu>
       </v-container>
     </v-app-bar>
+
+
+    <!-- Switch Account -->
+    <template>
+      <div class="text-center">
+        <v-dialog v-model="switchAccountDialog" width="500" scrollable>
+
+          <v-card>
+            <v-toolbar dense flat>
+              <div style="margin-left: 35%">Switch Accounts</div>
+              
+              <v-btn right absolute @click="switchAccountDialog = false,switchLogin = false" icon>
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+
+            </v-toolbar>
+
+            <v-divider></v-divider>
+
+            <v-card-text :style="[switchLogin ? {'height': '400px'}: {}]">
+              <v-list v-if="!switchLogin">
+                <v-list-item>
+                  <v-list-item-avatar>
+                    <v-img src="@/assets/avatar.jpg"></v-img>
+                  </v-list-item-avatar>
+                  <v-list-item-content>
+                    Swan Yee Htet Ko
+                  </v-list-item-content>
+                  <v-list-item-action>
+                    <v-btn icon color="blue">
+                      <v-icon>mdi-check-circle</v-icon>
+                    </v-btn>
+                  </v-list-item-action>
+                </v-list-item>
+              </v-list>
+              
+              <div v-if="switchLogin" class="mt-10">
+                <v-img src="@/assets/735145cfe0a4.png" class="mx-auto" contain width="150"></v-img>
+
+                <v-row>
+                  <v-col class="offset-2" cols="8">
+                    <v-text-field outlined dense hide-details="auto" label="Phone number, username or email"></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row >
+                  <v-col class="offset-2" cols="8">
+                    <v-text-field outlined dense hide-details="auto" label="Password"></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row no-gutters>
+                  <v-col class="offset-2" cols="8">
+                  <v-checkbox dense hide-details="auto" label="Save login info"></v-checkbox>
+                  </v-col>
+                </v-row>
+
+                <v-row>
+                  <v-col class="offset-2" cols="8">
+                    <v-btn depressed small class="text-capitalize" block color="blue" dark>Login</v-btn>
+                  </v-col>
+                </v-row>
+
+                <div class="text-center"><a href="#" class="text-decoration-none">Forgot password?</a></div>
+              </div>
+            </v-card-text>
+
+            <v-divider v-if="!switchLogin"></v-divider>
+
+              <div v-if="!switchLogin" class="text-center">
+                <v-btn
+                  color="primary"
+                  text
+                  @click="login()"
+                  class="text-capitalize ma-3"                  
+                >
+                  Log into a Existing Account
+                </v-btn>
+              </div>
+          </v-card>
+        </v-dialog>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -147,9 +261,9 @@ export default {
       {icon: 'mdi-account-circle-outline',name: 'Profile', link: '/profile/post'},
       {icon: 'mdi-content-save-outline',name: 'Saved',link: '/profile/saved'},
       {icon: 'mdi-cog-outline',name: 'Settings', link: '/account/edit'},
-      {icon: 'mdi-account-switch-outline',name: 'Switch Accounts', link: ''},
+      {icon: 'mdi-account-switch-outline',name: 'Switch Accounts', link: 'switchAccount'},
       {divider: true },
-      {icon: '',name: 'Log Out',}
+      {icon: '',name: 'Log Out',link: 'login'}
     ],
     notifications: [
       { avatar: 'https://picsum.photos/200/300?random=1',title: 'john_w', suggestion: 'started following you', date: '3w',data: null},
@@ -168,7 +282,9 @@ export default {
       {avatar: 'https://picsum.photos/200/300?random=4',name: 'wuro_bmm33',userName: 'Bhone Myint Myat'},
       {avatar: 'https://picsum.photos/200/300?random=5',name: 'pearl_twal',userName: 'Pearl Twal'},
       {avatar: 'https://picsum.photos/200/300?random=6',name: 'taylorswift',userName: 'Taylor Swift'},
-    ]
+    ],
+    switchAccountDialog: false,
+    switchLogin: false,
   }),
 
   watch: {
@@ -215,6 +331,17 @@ export default {
       }
     },
 
+    goToLink(e){
+      if(e == 'switchAccount'){
+        this.switchAccountDialog = true;
+      }else{
+        this.$router.push(e);
+      }
+    },
+
+    login(){
+      this.switchLogin = true;
+    }
   
   }
 }

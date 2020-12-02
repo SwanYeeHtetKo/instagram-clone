@@ -19,6 +19,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
+    path: '/account/:id',
+    name: 'Account',
+    component: () => import('../views/Account.vue')
+  },
+  {
     path: '/direct/inbox',
     name: 'directInbox',
     component: () => import('../views/Inbox.vue')
@@ -29,15 +34,16 @@ const routes = [
     component: () => import('../views/Explore.vue')
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/Login.vue')
+  },
+  {
     path: '/profile/:id',
     name: 'Profile',
     component: () => import('../views/Profile.vue')
   },
-  {
-    path: '/account/:id',
-    name: 'Account',
-    component: () => import('../views/Account.vue')
-  },
+  
 ]
 
 const router = new VueRouter({

@@ -13,7 +13,22 @@
               color="primary"
               size="60"
             >
-            <v-img :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"></v-img>
+            <v-img class="grey lighten-2" aspect-ratio="1"
+            :lazy-src="`https://picsum.photos/500/300?random=${n * 5+ 10}`"
+            :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`">
+              <template v-slot:placeholder>
+                <v-row
+                  class="fill-height ma-0"
+                  align="center"
+                  justify="center"
+                >
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
             </v-avatar>
             </div>
           </v-card-text>
@@ -27,7 +42,24 @@
               color="primary"
               size="35"
             >
-            <v-img :src="`https://picsum.photos/200/300?random=${n * 2 }`"></v-img>
+            
+            <v-img
+              class="grey lighten-2" aspect-ratio="1" 
+              :lazy-src="`https://picsum.photos/500/300?random=${n * 2}`"
+              :src="`https://picsum.photos/200/300?random=${n * 2 }`">
+              <template v-slot:placeholder>
+                <v-row
+                  class="fill-height ma-0"
+                  align="center"
+                  justify="center"
+                >
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+             </v-img>
             </v-avatar>
             <v-toolbar-title class="ml-5">John Smith</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -35,7 +67,20 @@
               <v-icon>mdi-dots-horizontal</v-icon>
             </v-btn>
           </v-toolbar>
-          <v-img :src="`https://picsum.photos/500/300?random=${n * 4 + 10}`"/>
+          <v-img class="grey lighten-2" contain :lazy-src="`https://picsum.photos/500/300?random=${n * 4 + 10}`" :src="`https://picsum.photos/500/300?random=${n * 4 + 10}`">
+          <template v-slot:placeholder>
+            <v-row
+              class="fill-height ma-0"
+              align="center"
+              justify="center"
+            >
+              <v-progress-circular
+                indeterminate
+                color="grey lighten-5"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+          </v-img>
           <v-card-text>
             <v-btn icon>
               <v-icon>mdi-heart-outline</v-icon>
@@ -70,7 +115,21 @@
         <v-list dense two-line color="grey lighten-3" style="position:fixed;" width="440">
           <v-list-item link>
             <v-list-item-avatar size="50">
-              <v-img src="@/assets/avatar.jpg"></v-img>
+              <v-img class="grey lighten-2" aspect-ratio="1"
+                  lazy-src="@/assets/avatar.jpg" src="@/assets/avatar.jpg">
+                <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+              </v-img>
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title class="title">
@@ -102,7 +161,22 @@
                 :key="item.title"
               >
                 <v-list-item-avatar>
-                  <v-img :src="item.avatar"></v-img>
+                  <v-img class="grey lighten-2" aspect-ratio="1"
+                  :lazy-src="item.avatar"
+                  :src="item.avatar">
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
                 </v-list-item-avatar>
 
                 <v-list-item-content>

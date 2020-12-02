@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <NavBar/>
+      <NavBar v-if="$route.path != '/login'"/>
       <v-main class="grey lighten-3">
       <v-container>
         <router-view/>
