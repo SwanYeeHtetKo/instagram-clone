@@ -147,9 +147,8 @@
             </v-btn>
           </template>
 
-          <v-list dense>
+          <v-list dense flat>
             <v-list-item-group
-              color="primary"
             >
             <template v-for="item in userDropDown">
               <v-divider  v-if="item.divider" :key="item.icon"></v-divider>
@@ -261,9 +260,9 @@ export default {
       {icon: 'mdi-account-circle-outline',name: 'Profile', link: '/profile/post'},
       {icon: 'mdi-content-save-outline',name: 'Saved',link: '/profile/saved'},
       {icon: 'mdi-cog-outline',name: 'Settings', link: '/account/edit'},
-      {icon: 'mdi-account-switch-outline',name: 'Switch Accounts', link: 'switchAccount'},
+      {icon: 'mdi-account-switch-outline',name: 'Switch Accounts', link: '/switchAccount'},
       {divider: true },
-      {icon: '',name: 'Log Out',link: 'login'}
+      {icon: '',name: 'Log Out',link: '/login'}
     ],
     notifications: [
       { avatar: 'https://picsum.photos/200/300?random=1',title: 'john_w', suggestion: 'started following you', date: '3w',data: null},
@@ -332,7 +331,7 @@ export default {
     },
 
     goToLink(e){
-      if(e == 'switchAccount'){
+      if(e == '/switchAccount'){
         this.switchAccountDialog = true;
       }else{
         this.$router.push(e);

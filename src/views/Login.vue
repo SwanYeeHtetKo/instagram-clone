@@ -27,24 +27,81 @@
                     </div>
                     <div >
                         <v-row justify="center" align="center" style="height:100%">
-                            <v-card flat width="400">
-                                <div class="pt-12">
-                                    <v-img src="@/assets/735145cfe0a4.png"  width="120" class="mx-auto"></v-img>
-                                </div>
-                                <v-row justify="center" class="mt-3">
-                                    <v-avatar size="100">
-                                        <v-img src="@/assets/avatar.jpg"></v-img>
-                                    </v-avatar>
-                                </v-row>
-                                
-                                    <div class="text-center mt-5">
-                                        <v-btn width="250" route to="/" color="#459bf6" dark depressed small class="text-capitalize">
-                                            Continue as swan_yee_htet_ko
-                                        </v-btn>
+                            <div>
+                                <v-card flat width="350">
+                                    <div v-if="!signUp">
+                                        <div class="pt-12">
+                                            <v-img src="@/assets/735145cfe0a4.png"  width="120" class="mx-auto"></v-img>
+                                        </div>
+                                        <v-row justify="center" class="mt-3">
+                                            <v-avatar size="100">
+                                                <v-img src="@/assets/avatar.jpg"></v-img>
+                                            </v-avatar>
+                                        </v-row>
+                                        
+                                            <div class="text-center mt-5">
+                                                <v-btn width="250" route to="/" color="#459bf6" dark depressed small class="text-capitalize">
+                                                    Continue as swan_yee_htet_ko
+                                                </v-btn>
+                                            </div>
+                                        <p class="text-center mt-5">Not swan_yee_htet_ko? 
+                                            <a @click="signUp = true" class="text-decoration-none">Switch accounts</a>
+                                        </p>
                                     </div>
-                                <p class="text-center mt-5">Not swan_yee_htet_ko? <a href="#" class="text-decoration-none">Switch accounts</a></p>
-                                <br/>
-                            </v-card>
+                                    <div v-if="signUp">
+                                        <div class="pt-12">
+                                            <v-img src="@/assets/735145cfe0a4.png"  width="120" class="mx-auto"></v-img>
+                                        </div>
+                                        <div class="mt-5" style="margin-left:50px;margin-right:50px">
+                                            <v-row>
+                                                <v-col>
+                                                    <v-text-field outlined dense hide-details="auto" label="Phone number, username, or email"></v-text-field>
+                                                </v-col>
+                                            </v-row>
+                                            <v-row>
+                                                <v-col>
+                                                    <v-text-field outlined dense hide-details="auto" label="Password"></v-text-field>
+                                                </v-col>
+                                            </v-row>
+                                            <v-row>
+                                                <v-col>
+                                                    <v-btn class="text-capitalize" route to="/" depressed small color="#459bf6" dark block>Log in</v-btn>
+                                                </v-col>
+                                            </v-row>
+
+                                            <v-row no-gutters>
+                                                <v-col class="flex-shrink-0"><v-divider class="mt-3"></v-divider></v-col>
+                                                <v-col class="flex-shrink-0"><p class="text-center">OR</p></v-col>
+                                                <v-col class="flex-shrink-0"><v-divider class="mt-3"></v-divider></v-col>
+                                            </v-row>
+
+                                            <v-row no-gutters>
+                                                <v-col>
+                                                    <v-btn block text color="#385185" @click="signUp = false" class="text-capitalize">
+                                                        <v-icon class="mr-3" >mdi-facebook</v-icon>
+                                                        Log in with Facebook
+                                                    </v-btn>
+                                                </v-col>
+                                            </v-row>
+
+                                            <v-row no-gutters >
+                                                <v-col cols="12">
+                                                    <p class="text-center mt-2" style="font-size: 11px"><a class="text-decoration-none ">Forgot password?</a></p>
+                                                </v-col>
+                                            </v-row>                                            
+                                        </div>
+                                    </div>
+                                    <br/>
+                                </v-card>
+
+                                <v-card v-if="signUp" flat width="350" class="mt-3">
+                                    <v-card-text>
+                                        <div class="text-center text--primary">Don't have an accounts? <span @click="goTosignUp" style="color:#459bf6;cursor:pointer" class="font-weight-bold">Sign up</span></div>
+                                    </v-card-text>
+                                </v-card>
+
+                                <p v-if="signUp" class="text-center mt-3" style="width:350px">Get the app</p>
+                            </div>
                         </v-row>
                     </div>
                 </div>                
@@ -74,6 +131,20 @@
     </div>
 </template>
 
+<script>
+export default {
+    data:() =>({
+        signUp: false
+    }),
+
+    methods:{
+        goTosignUp(){
+            this.$router.push('/account/emailsingup')
+        }
+    }
+}
+</script>
+
 <style scoped>
 @keyframes imageFadeInOut {
     0% {
@@ -91,6 +162,14 @@
   100% {
     opacity:1;
   }
+}
+
+.first{
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-duration: 10s;
+    animation-name: imageFadeInOut;
+    animation-delay: 10s;
 }
 
 
@@ -123,6 +202,6 @@
     animation-iteration-count: infinite;
     animation-duration: 10s;
     animation-name: imageFadeInOut;
-    animation-delay: 0s;
+    animation-delay: 2s;
 }
 </style>

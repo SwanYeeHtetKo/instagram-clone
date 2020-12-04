@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <NavBar v-if="$route.path != '/login'"/>
+      <NavBar v-if="$route.path != '/login' && $route.path != '/account/emailsingup'"/>
       <v-main class="grey lighten-3">
       <v-container>
         <router-view/>
