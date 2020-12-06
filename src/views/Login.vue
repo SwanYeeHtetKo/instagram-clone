@@ -139,7 +139,7 @@ export default {
 
     methods:{
         goTosignUp(){
-            this.$router.push('/account/emailsingup')
+            this.$router.push('/account')
         }
     }
 }

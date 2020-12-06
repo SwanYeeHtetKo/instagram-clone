@@ -19,7 +19,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/account/:id',
+    path: '/account',
     name: 'Account',
     component: () => import('../views/Account.vue')
   },
@@ -39,7 +39,7 @@ const routes = [
     component: () => import('../views/Login.vue')
   },
   {
-    path: '/profile/:id',
+    path: '/profile',
     name: 'Profile',
     component: () => import('../views/Profile.vue')
   },

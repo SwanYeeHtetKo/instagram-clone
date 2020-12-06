@@ -3,11 +3,11 @@
         <v-card flat style="border:1px solid rgba(0,0,0,0.2)">
             <v-row no-gutters>
                 <v-col style="position:relative" cols="12" xs="12" sm="12" md="4" :style="[$vuetify.breakpoint.smAndDown ? {'border': 'none'}:{'border-right': '1px solid rgba(0,0,0,0.2)'}]">
-                    <v-btn class="text-lowercase ml-12 pt-5" text>swan_yee_htet_ko<v-icon>mdi-chevron-down</v-icon></v-btn>
-                    <v-btn icon right absolute class="pt-5">
+                    <v-btn class="text-lowercase ml-12 mt-3" text>swan_yee_htet_ko<v-icon>mdi-chevron-down</v-icon></v-btn>
+                    <v-btn icon right absolute class="mt-3">
                         <v-icon>mdi-square-edit-outline</v-icon>
                     </v-btn>
-                    <v-divider class="mt-6"></v-divider>
+                    <v-divider class="mt-3"></v-divider>
                     <v-list>
                         <v-list-item two-line @click="goChatBox()">
                             <v-list-item-avatar>
@@ -71,7 +71,7 @@
                                 <div v-else>
                                     <v-icon class="mr-3" @click="$refs.file.click()">mdi-image</v-icon>
                                     <input type="file" ref="file" style="display: none">
-                                    <v-icon @click="messages.push({user:'me' ,message: 'mdi-heart-outline'}),scrollToEnd()">mdi-heart-outline</v-icon>
+                                    <v-icon @click="messages.push({user:'me' ,message: 'mdi-heart-outline',date: null}),scrollToEnd()">mdi-heart-outline</v-icon>
                                 </div>
                             </template>
                             </v-text-field>
@@ -86,28 +86,39 @@
                         <p class="text-center">Your Messages</p>
                         <p class="text-center">Send private photos and messages to a friend or group.</p>
                         <v-row justify="center" align="center">
-                            <v-btn class="text-capitalize" small depressed color="#0195f6" dark>Send Message</v-btn>
+                            <v-btn @click="choosePeople()" class="text-capitalize" small depressed color="#0195f6" dark>Send Message</v-btn>
                         </v-row>
                         <br/>
                     </div>
                 </v-col>
             </v-row>
         </v-card>
+
+        <!-- Choose People -->
+        <ChoosePeopleDialog  :dialog="dialog" @closeDialogData="closeDialog"/>
     </div>
 </template>
 <script>
+import ChoosePeopleDialog from '@/components/message/ChoosePeopleDialog'
 export default {
+
+    components:{
+        ChoosePeopleDialog
+    },
+
     data:() =>({
         checkBox: true,
         messages: [
-            {user:'friend', message:'hi',date: 'November 3, 2019 7:14 pm'},
-            {user:'me',message:'hello',date: 'November 3, 2019 7:14 pm'},
-            {user:'friend', message:'how are you?',date: 'November 3, 2019 7:14 pm'},
-            {user:'me', message:'i\'m fine bro!',date: 'November 3, 2019 7:14 pm'},
+            // Note: add null for date if user send same date Use some function eg.(map)
+            {user:'friend', message:'hi',date: 'November 3, 2019'},
+            {user:'me',message:'hello',date: null},
+            {user:'friend', message:'how are you?',date: null},
+            {user:'me', message:'i\'m fine bro!',date: null},
             {user:'me', message:'Hello baby',date: 'Today'},
         ],
         message:null,
         status: null,
+        dialog: false
     }),
 
     watch:{
@@ -123,7 +134,7 @@ export default {
         },
 
         sendMessage(){
-            this.messages.push({user: 'me', message: this.message});
+            this.messages.push({user: 'me', message: this.message,date: null});
             this.scrollToEnd();
             this.message = null
         },
@@ -132,6 +143,13 @@ export default {
             let scroll = this.$el.querySelector("#scroll");
             scroll.scrollTop = scroll.scrollHeight;
         },
+
+        choosePeople(){
+            this.dialog = true;
+        },
+        closeDialog(){
+            this.dialog = false
+        }
     }
 }
 </script>

@@ -259,7 +259,7 @@ export default {
     userDropDown:[
       {icon: 'mdi-account-circle-outline',name: 'Profile', link: '/profile/post'},
       {icon: 'mdi-content-save-outline',name: 'Saved',link: '/profile/saved'},
-      {icon: 'mdi-cog-outline',name: 'Settings', link: '/account/edit'},
+      {icon: 'mdi-cog-outline',name: 'Settings', link: '/account'},
       {icon: 'mdi-account-switch-outline',name: 'Switch Accounts', link: '/switchAccount'},
       {divider: true },
       {icon: '',name: 'Log Out',link: '/login'}
@@ -333,7 +333,18 @@ export default {
     goToLink(e){
       if(e == '/switchAccount'){
         this.switchAccountDialog = true;
+      }else if(e == '/profile/post'){
+        this.$store.dispatch('takeTabId',{id: 0});
+        this.$router.push('/profile')
+      }else if(e == '/profile/saved'){
+        this.$store.dispatch('takeTabId',{id: 2});
+        this.$router.push('/profile')
+      }
+      else if(e == '/switchAccount'){
+        this.$store.dispatch('takeAccountId',{id: 0})
+        this.$router.push('/account');
       }else{
+        this.$store.dispatch('takeAccountId',{id: 1})
         this.$router.push(e);
       }
     },

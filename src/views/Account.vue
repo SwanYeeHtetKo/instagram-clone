@@ -1,9 +1,9 @@
 <template>
     <div>
-        <p class="text-center text--secondary" v-if="$route.path == '/account/emailsingup'">Log in to continue</p>
-        <v-card class="mx-auto" :width="$route.path == '/account/emailsingup' ? '350': '100%'" flat style="border: 1px solid rgba(0,0,0,0.2)">
+        <p class="text-center text--secondary" v-if="accountTabId == null">Log in to continue</p>
+        <v-card class="mx-auto" :width="accountTabId == null ? '350': '100%'" flat style="border: 1px solid rgba(0,0,0,0.2)">
             
-            <v-card-text  v-if="$route.path == '/account/emailsingup'">
+            <v-card-text  v-if="accountTabId == null">
                 <v-img width="150" class="mx-auto mt-5" src="@/assets/735145cfe0a4.png"/>
                 <p class="text-center sub-title font-weight-bold mt-3">Sign up to see photos and<br/> videos from your friends.</p>
                 <v-row>
@@ -46,24 +46,28 @@
                     </v-col>
                 </v-row>
                 <p class="text-center">By signing up, you agree to our Terms , Data <br/> Policy and Cookies Policy .</p>
-            </v-card-text>
+            </v-card-text> 
 
-            <v-tabs v-else vertical color="dark" >
-                <v-tab class="text-capitalize hidden-sm-and-down" v-for="item in tabs" :key="item" :href="`/profile/#${item}`">                    
-                    {{item}}
-                </v-tab>                
-
-                <v-tab-item v-for="item in tabs" :key="item" :value="`/profile/${item}`">
-                    <v-card flat class="mr-12 ml-12">
-                        <v-card-text>
-                            <tabsComponents v-show="item == component.link" v-for="component in tabsComponents" :key="component.name" :is="component.name"  />
-                        </v-card-text>
-                    </v-card>
-                </v-tab-item>
-            </v-tabs>
+            <div v-else>
+                <v-tabs v-model="accountTabId" vertical color="dark" >
+                    <v-tab  class="text-capitalize hidden-sm-and-down" v-for="item in tabs" :key="item" >
+                        {{item}}
+                    </v-tab>                
+                
+                    <v-tabs-items style="background-color:transparent" v-model="accountTabId" >
+                        <v-tab-item v-for="(item,index) in tabs" :key="item" :value="index">
+                            <v-card flat class="mr-12 ml-12">
+                                <v-card-text>
+                                    <tabsComponents v-show="item == component.link" v-for="component in tabsComponents" :key="component.name" :is="component.name"  />
+                                </v-card-text>
+                            </v-card>
+                        </v-tab-item>
+                    </v-tabs-items>
+                </v-tabs>
+            </div>
         </v-card>
 
-        <v-card width="350" class="mx-auto mt-3" v-if="$route.path == '/account/emailsingup'">
+        <v-card width="350" class="mx-auto mt-3" v-if="accountTabId == null">
             <v-card-text>
                 <div class="text-center">Have an account? <a @click="$router.push('/login')" class="text-decoration-none">Log in</a></div>
             </v-card-text>
@@ -95,6 +99,17 @@ export default {
         EmailFromInstagram
     },
 
+    computed:{
+        accountTabId:{
+            get(){
+                return this.$store.getters.accountTabId
+            },
+            set(e){
+                this.$store.dispatch('takeAccountId',{id: e})
+            }
+        }
+    },
+
     data:() =>({
         tabs: [
             'Edit Profile',
@@ -118,7 +133,9 @@ export default {
             {name: 'LoginActivity', link: 'Login Activity'},
             {name: 'EmailFromInstagram', link: 'Email from Instagram'},
         ]
-    })
+    }),
+
+    
 }
 </script>
 

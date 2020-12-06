@@ -55,50 +55,50 @@
         <!-- user data -->
         <template>
             <v-tabs show-arrows
-            v-model="tabId"
+            v-model="profileTabId"
             background-color="transparent"
             centered
             >
                 <v-tabs-slider color="black"></v-tabs-slider>
 
-                <v-tab :href="`/profile/#post`">
+                <v-tab >
                     <v-icon class="mr-2">mdi-post-outline</v-icon>
                     Posts
                 </v-tab>
 
-                <v-tab :href="`/profile/#channel`">
+                <v-tab >
                     <v-icon class="mr-2">mdi-television-classic</v-icon>
                     IGTV                    
                 </v-tab>
 
-                <v-tab :href="`/profile/#saved`">
+                <v-tab >
                     <v-icon class="mr-2">mdi-content-save-outline</v-icon>
                     Saved                    
                 </v-tab>
 
-                <v-tab :href="`/profile/#tagged`">
+                <v-tab >
                     <v-icon class="mr-2">mdi-clipboard-account-outline</v-icon>
                     Tagged                    
                 </v-tab>
             </v-tabs>
 
-            <v-tabs-items style="background-color:transparent" v-model="tabId" >
-                <v-tab-item :value="`/profile/post`">
+            <v-tabs-items style="background-color:transparent" v-model="profileTabId" >
+                <v-tab-item :value="0">
                     <v-container>
                         <ViewMyPost/>
                     </v-container>
                 </v-tab-item>
-                <v-tab-item :value="`/profile/channel`">
+                <v-tab-item :value="1">
                     <v-container>
                         <IGTV/>
                     </v-container>
                 </v-tab-item>
-                <v-tab-item :value="`/profile/saved`">
+                <v-tab-item :value="2">
                     <v-container>
                         <Save/>
                     </v-container>
                 </v-tab-item>
-                <v-tab-item :value="`/profile/tagged`">
+                <v-tab-item :value="3">
                     <v-container>
                         <Tagged/>
                     </v-container>
@@ -151,7 +151,6 @@ import Tagged from '@/components/profile/Tagged'
     },
     data () {
       return {
-        tabId: '/profile/'+this.$route.params.id,
         openSettingDialog: false,
         settingBox: [
             {text: 'Change Password'},
@@ -167,6 +166,20 @@ import Tagged from '@/components/profile/Tagged'
         ]
       }
     },
+
+    computed:{
+        profileTabId:{
+            get(){
+                return this.$store.getters.profileTabId
+            },
+            set(e){
+                this.$store.dispatch('takeTabId',{id: e});
+            }
+        }
+    },
+
+    methods:{
+    }
 
   }
 </script>
