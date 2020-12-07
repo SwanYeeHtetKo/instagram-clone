@@ -4,31 +4,50 @@
             <v-row no-gutters>
                 <v-col style="position:relative" cols="12" xs="12" sm="12" md="4" :style="[$vuetify.breakpoint.smAndDown ? {'border': 'none'}:{'border-right': '1px solid rgba(0,0,0,0.2)'}]">
                     <v-btn class="text-lowercase ml-12 mt-3" text>swan_yee_htet_ko<v-icon>mdi-chevron-down</v-icon></v-btn>
-                    <v-btn icon right absolute class="mt-3">
+                    <v-btn @click="choosePeople()" icon right absolute class="mt-3">
                         <v-icon>mdi-square-edit-outline</v-icon>
                     </v-btn>
                     <v-divider class="mt-3"></v-divider>
-                    <v-list>
-                        <v-list-item two-line @click="goChatBox()">
-                            <v-list-item-avatar>
-                                <v-img src="https://picsum.photos/200/300?random"/>
-                            </v-list-item-avatar>
-                            <v-list-item-content>
-                                <v-list-item-title>pearl_twal</v-list-item-title>
-                                <v-list-item-subtitle>You sent a message . 56 w</v-list-item-subtitle>
-                            </v-list-item-content>                            
-                        </v-list-item>
+                    <v-list >
+                        <v-list-item-group v-model="selectedItem" color="primary">
+                            <v-list-item  v-for="(item,i) in groups" :key="i" two-line @click="goChatBox(item)">
+                                <v-list-item-avatar>
+                                    <v-img :src="`https://picsum.photos/200/300?random${i * 5+ 10}`"/>
+                                </v-list-item-avatar>
+                                <v-list-item-content>
+                                    <!-- Your can check with type or array... as you like -->
+                                    <v-list-item-title v-if="!Array.isArray(item.user)">{{item.user}}</v-list-item-title>
+                                    <v-list-item-title v-else >
+                                        <div class="d-flex">
+                                            <div class="text-truncate" v-for="(group,i2) in item.user" :key="i2">
+                                                {{group.title}}
+                                                <span v-show="i2 -1">,</span>
+                                            </div>
+                                        </div>
+                                    </v-list-item-title>
+                                    <v-list-item-subtitle>You sent a message . {{item.date}}</v-list-item-subtitle>
+                                </v-list-item-content>                            
+                            </v-list-item>
+                        </v-list-item-group>
                     </v-list>
                 </v-col>
                 <v-col cols="12" xs="12" sm="12" md="8">
-                    <div>
+                    <div v-if="currentChatUser.length != 0">
                         <v-list dense class="pa-0 ma-0">
                             <v-list-item dense>
                                 <v-list-item-avatar size="30">
                                     <v-img src="https://picsum.photos/200/300?random"/>
                                 </v-list-item-avatar>
                                 <v-list-item-content>
-                                    <v-list-item-title>pearl_twal</v-list-item-title>                                    
+                                    <v-list-item-title v-if="currentChatUser.length > 1">
+                                        <div class="d-flex">
+                                        <div class="text-truncate" v-for="(group,i2) in currentChatUser" :key="i2">
+                                            {{group.title}}
+                                            <span v-show="i2 -1">,</span>
+                                        </div>
+                                    </div>
+                                    </v-list-item-title>
+                                    <v-list-item-title v-else>{{currentChatUser[0].title}}</v-list-item-title>                
                                 </v-list-item-content>
                                 <v-list-item-action>
                                     <v-btn icon>
@@ -71,7 +90,7 @@
                                 <div v-else>
                                     <v-icon class="mr-3" @click="$refs.file.click()">mdi-image</v-icon>
                                     <input type="file" ref="file" style="display: none">
-                                    <v-icon @click="messages.push({user:'me' ,message: 'mdi-heart-outline',date: null}),scrollToEnd()">mdi-heart-outline</v-icon>
+                                    <v-icon @click="messages.push({user:'me' ,message: 'mdi-heart-outline',date: 'Today'}),scrollToEnd()">mdi-heart-outline</v-icon>
                                 </div>
                             </template>
                             </v-text-field>
@@ -95,7 +114,7 @@
         </v-card>
 
         <!-- Choose People -->
-        <ChoosePeopleDialog  :dialog="dialog" @closeDialogData="closeDialog"/>
+        <ChoosePeopleDialog  :dialog="dialog" @selectedUserData="selectedUser" @closeDialogData="closeDialog"/>
     </div>
 </template>
 <script>
@@ -107,6 +126,7 @@ export default {
     },
 
     data:() =>({
+        selectedItem: null,
         checkBox: true,
         messages: [
             // Note: add null for date if user send same date Use some function eg.(map)
@@ -114,11 +134,16 @@ export default {
             {user:'me',message:'hello',date: null},
             {user:'friend', message:'how are you?',date: null},
             {user:'me', message:'i\'m fine bro!',date: null},
-            {user:'me', message:'Hello baby',date: 'Today'},
+            {user:'me', message:'Hello baby',date: null},
         ],
         message:null,
         status: null,
-        dialog: false
+        dialog: false,
+        groups: [
+            //Note:  use key with id from api
+            {user: 'pearl_twal',type: 'personal', date: '56 w'}
+        ],
+        currentChatUser: []
     }),
 
     watch:{
@@ -129,12 +154,13 @@ export default {
 
 
     methods:{
-        goChatBox(){
+        goChatBox(item){
             this.checkBox = false;
+            this.currentChatUser = [{title:item.user}]
         },
 
         sendMessage(){
-            this.messages.push({user: 'me', message: this.message,date: null});
+            this.messages.push({user: 'me', message: this.message,date: new Date()});
             this.scrollToEnd();
             this.message = null
         },
@@ -148,7 +174,22 @@ export default {
             this.dialog = true;
         },
         closeDialog(){
-            this.dialog = false
+            this.dialog = false;
+            
+        },
+
+        selectedUser(e){
+            this.currentChatUser = []
+            if(e.length > 1){
+                this.groups.push({user: e, type: 'group', date: 'Today'});
+            }else{
+                this.groups.push({user: e[0].title, type: 'personnal', date: 'Today'});
+            }
+            this.currentChatUser =(e);
+            this.closeDialog();
+            this.checkBox = false;
+            this.messages = [];
+            this.selectedItem = this.groups.length - 1
         }
     }
 }
