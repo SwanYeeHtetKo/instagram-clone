@@ -62,14 +62,21 @@
                             <v-container >
                                 <div v-for="(item,index) in messages" :key="index">
                                     <div v-if="item.date" class="text-center">{{item.date}}</div>
-                                    <div :style="[item.user == 'friend' ? {'text-align': 'left'}: {'text-align': 'right'}]">
+                                    <div :style="[item.user == 'friend' ? {'text-align': 'left'}: {'text-align': 'right',}]">
                                         <div class="mt-3" v-if="item.message == 'mdi-heart-outline'">
                                             <v-icon color="red">mdi-heart</v-icon>
                                         </div>
                                         <div v-else class="mt-3">
                                         {{item.message}}
+                                        </div>                                        
+                                        <div  style="position:relative" v-if="item.image">
+                                            <v-img :src="item.image" 
+                                            :style="[item.user == 'friend' ? {'float': 'left'}: {'float': 'right',}]"
+                                            contain max-height="150" max-width="250">
+                                            </v-img>
                                         </div>
-                                    </div>
+                                        <div style="clear:both"></div>
+                                    </div>                                    
                                 </div>  
                             </v-container>
                             <br/><br/>
@@ -89,8 +96,8 @@
                                 </div>
                                 <div v-else>
                                     <v-icon class="mr-3" @click="$refs.file.click()">mdi-image</v-icon>
-                                    <input type="file" ref="file" style="display: none">
-                                    <v-icon @click="messages.push({user:'me' ,message: 'mdi-heart-outline',date: 'Today'}),scrollToEnd()">mdi-heart-outline</v-icon>
+                                    <input type="file" @change="fileData($event)" ref="file" style="display: none">
+                                    <v-icon @click="messages.push({user:'me' ,message: 'mdi-heart-outline',image: null, date: new Date()}),scrollToEnd()">mdi-heart-outline</v-icon>
                                 </div>
                             </template>
                             </v-text-field>
@@ -130,17 +137,17 @@ export default {
         checkBox: true,
         messages: [
             // Note: add null for date if user send same date Use some function eg.(map)
-            {user:'friend', message:'hi',date: 'November 3, 2019'},
-            {user:'me',message:'hello',date: null},
-            {user:'friend', message:'how are you?',date: null},
-            {user:'me', message:'i\'m fine bro!',date: null},
-            {user:'me', message:'Hello baby',date: null},
+            {user:'friend', message:'hi',image: null, date: 'November 3, 2019'},
+            {user:'me',message:'hello',image: null, date: null},
+            {user:'friend', message:'how are you?',image: null, date: null},
+            {user:'me', message:'i\'m fine bro!',image: null, date: null},
+            {user:'me', message:'Hello baby',image: null, date: null},
         ],
         message:null,
         status: null,
         dialog: false,
         groups: [
-            //Note:  use key with id from api
+            //Note:  use for key => id (from api)
             {user: 'pearl_twal',type: 'personal', date: '56 w'}
         ],
         currentChatUser: []
@@ -157,15 +164,16 @@ export default {
         goChatBox(item){
             this.checkBox = false;
             this.currentChatUser = [{title:item.user}]
+            this.messages = []
         },
 
         sendMessage(){
-            this.messages.push({user: 'me', message: this.message,date: new Date()});
+            this.messages.push({user: 'me', message: this.message,image: null, date: new Date()});
             this.scrollToEnd();
             this.message = null
         },
 
-        scrollToEnd: function() {    	
+        scrollToEnd() {    	
             let scroll = this.$el.querySelector("#scroll");
             scroll.scrollTop = scroll.scrollHeight;
         },
@@ -190,6 +198,12 @@ export default {
             this.checkBox = false;
             this.messages = [];
             this.selectedItem = this.groups.length - 1
+        },
+
+        fileData(e){
+            // you can change file to base64 format
+            this.messages.push({user: 'me',message:null,image: URL.createObjectURL(e.target.files[0]),date: new Date()})
+            this.scrollToEnd();
         }
     }
 }
