@@ -36,7 +36,7 @@
 
         <!-- New Feed -->
 
-        <v-card class="mt-12" style="border: 1px solid rgba(0,0,0,0.2)" v-for="n in 10" flat :key="n">
+        <v-card class="mt-12" style="border: 1px solid rgba(0,0,0,0.2)" v-for="(item,n) in newsFeedData" flat :key="n">
           <v-toolbar elevation="0">
             <v-avatar
               color="primary"
@@ -61,7 +61,7 @@
               </template>
              </v-img>
             </v-avatar>
-            <v-toolbar-title class="ml-5">John Smith</v-toolbar-title>
+            <v-toolbar-title class="ml-5">{{item.userName}}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon @click="postSettings = true">
               <v-icon>mdi-dots-horizontal</v-icon>
@@ -82,8 +82,9 @@
           </template>
           </v-img>
           <v-card-text>
-            <v-btn icon>
-              <v-icon>mdi-heart-outline</v-icon>
+            <v-btn icon @click.stop="item.liked =! item.liked">
+              <v-icon v-if="item.liked">mdi-heart-outline</v-icon>
+              <v-icon v-else color="red">mdi-heart</v-icon>
             </v-btn>
             <v-btn icon>
               <v-icon>mdi-message-outline</v-icon>
@@ -94,7 +95,7 @@
             <v-btn icon absolute right>
               <v-icon>mdi-content-save-outline</v-icon>
             </v-btn>
-            <p class="ml-2 font-weight-bold">6 likes</p>
+            <p class="ml-2 font-weight-bold"><span v-if="item.liked">0</span><span v-else>1</span> likes</p>
             <div class="ml-2 caption">22 MIN AGO</div>
           </v-card-text>
           <v-divider></v-divider>
@@ -225,6 +226,19 @@
   export default {
     data: () => ({
       postSettings: false,
+      liked: false,
+      newsFeedData: [
+        {userName: 'John Smith', liked: true},
+        {userName: 'Christ', liked: true},
+        {userName: 'Rose', liked: true},
+        {userName: 'Kyaw Kyaw', liked: true},
+        {userName: 'Aung Aunng', liked: true},
+        {userName: 'Swan Yee Htet Ko', liked: true},
+        {userName: 'Kay Zin Thet', liked: true},
+        {userName: 'Thurein Mg Mg', liked: true},
+        {userName: 'Sabal Phyu', liked: true},
+        {userName: 'Hein Thu', liked: true}
+      ],
       items: [
         {
           avatar: 'https://picsum.photos/200/300?random=1',

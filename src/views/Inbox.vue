@@ -58,38 +58,60 @@
                         </v-list>
                         <v-divider></v-divider>
                         <v-card-text v-show="!checkBox">
-                        <div id="scroll" :style="[ !checkBox ?{'min-height':'300px','max-height': '300px','overflow': 'auto'}:{}]">
-                            <v-container >
+                        <div id="scroll" :style="[ !checkBox ?{'min-height':'300px','max-height': '300px','overflow': 'auto'}:{'min-height': '300px'}]">
+                            <v-container id="scrolled-content">
                                 <div v-for="(item,index) in messages" :key="index">
-                                    <div v-if="item.date" class="text-center">{{item.date}}</div>
+                                    <div class="text-center">{{item.date}}</div>
                                     <div :style="[item.user == 'friend' ? {'text-align': 'left'}: {'text-align': 'right',}]">
                                         <div class="mt-3" v-if="item.message == 'mdi-heart-outline'">
                                             <v-icon color="red">mdi-heart</v-icon>
                                         </div>
                                         <div v-else class="mt-3">
                                         {{item.message}}
-                                        </div>                                        
-                                        <div  style="position:relative" v-if="item.image">
+                                        </div>
+                                        <div style="position:relative" v-if="item.image">
                                             <v-img :src="item.image" 
-                                            :style="[item.user == 'friend' ? {'float': 'left'}: {'float': 'right',}]"
-                                            contain max-height="150" max-width="250">
+                                            :style="[item.user == 'friend' ? {'float': 'left'}: {'float': 'right'}]"
+                                             max-height="150" max-width="250">
                                             </v-img>
                                         </div>
                                         <div style="clear:both"></div>
-                                    </div>                                    
+                                    </div>
                                 </div>  
                             </v-container>
-                            <br/><br/>
+                            <br/><br/><br/>
                         </div>
                         <div v-if="message">{{status}}</div>
                             <v-text-field
+                            id="inputMessage"
                             v-model="message" 
                             hide-details="auto" 
-                            prepend-inner-icon="mdi-emoticon-happy-outline"
                             outlined single-line rounded 
                             label="Message..."
                             clearable
                             >
+                            <template v-slot:prepend-inner>
+                                <v-menu offset-x>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                        color="primary"
+                                        dark
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        >
+                                        mdi-emoticon-happy-outline
+                                        </v-icon>
+                                    </template>
+                                    <!-- https://www.npmjs.com/package/emoji-mart-vue -->
+                                    <picker
+                                        :showSearch="false"
+                                        :showCategories="false"
+                                        set="messenger"
+                                        :showPreview="false"
+                                        @select="addEmoji"
+                                    />
+                                </v-menu>
+                            </template>
                             <template v-slot:append>
                                 <div style="cursor: pointer" @click="sendMessage()" class="pt-1" v-if="message">
                                     Send
@@ -125,14 +147,20 @@
     </div>
 </template>
 <script>
+import { Picker } from 'emoji-mart-vue'
 import ChoosePeopleDialog from '@/components/message/ChoosePeopleDialog'
 export default {
 
     components:{
-        ChoosePeopleDialog
+        ChoosePeopleDialog,Picker
     },
 
     data:() =>({
+        winHeight: window.innerHeight * 2 + "rem",
+        container: null,
+        elem: null,
+        scrollTop: 400,
+        emojiData: null,
         selectedItem: null,
         checkBox: true,
         messages: [
@@ -161,6 +189,15 @@ export default {
 
 
     methods:{
+        addEmoji(e){
+            this.emojiData = e;
+            let cursorIndex = document.getElementById('inputMessage').selectionEnd;
+            if(this.message == null){
+                this.message = e.native
+            }else{
+                this.message = this.message.substring(0,cursorIndex)+e.native+this.message.substring(cursorIndex)
+            }
+        },
         goChatBox(item){
             this.checkBox = false;
             this.currentChatUser = [{title:item.user}]
@@ -176,6 +213,7 @@ export default {
         scrollToEnd() {    	
             let scroll = this.$el.querySelector("#scroll");
             scroll.scrollTop = scroll.scrollHeight;
+            
         },
 
         choosePeople(){
