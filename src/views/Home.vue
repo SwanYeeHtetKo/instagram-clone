@@ -86,13 +86,13 @@
               <v-icon v-if="item.liked">mdi-heart-outline</v-icon>
               <v-icon v-else color="red">mdi-heart</v-icon>
             </v-btn>
-            <v-btn icon>
+            <v-btn @click="$router.push(`/comment/${n * 4 + 10}`)" icon>
               <v-icon>mdi-message-outline</v-icon>
             </v-btn>
             <v-btn icon>
               <v-icon>mdi-send-outline</v-icon>
             </v-btn>
-            <v-btn icon absolute right>
+            <v-btn @click="snackbar = true;" icon absolute right>
               <v-icon>mdi-content-save-outline</v-icon>
             </v-btn>
             <p class="ml-2 font-weight-bold" v-if="!item.liked"><span v-if="item.liked">0</span><span v-else>1</span> likes</p>
@@ -219,6 +219,26 @@
         </v-dialog>
       </div>
     </template>
+
+    <!-- snack bar -->
+    <v-snackbar
+      v-model="snackbar"
+      outlined
+      color="deep-purple accent-4"
+    >
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="deep-purple accent-4"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -242,27 +262,27 @@
       items: [
         {
           avatar: 'https://picsum.photos/200/300?random=1',
-          title: 'Brunch this weekend?',
+          title: 'Kyaw Gyi',
           subtitle: `Follows you`,
         },
         {
           avatar: 'https://picsum.photos/200/300?random=2',
-          title: 'Swan Yee Htet Ko',
+          title: 'Justin Viber',
           subtitle: `New to instagram`,
         },
         {
           avatar: 'https://picsum.photos/200/300?random=3',
-          title: 'Oui oui',
+          title: 'Westlife',
           subtitle: 'Followed by sabalphyu98',
         },
         {
           avatar: 'https://picsum.photos/200/300?random=4',
-          title: 'Birthday gift',
+          title: 'Two Direction',
           subtitle: 'Suggested for you',
         },
         {
           avatar: 'https://picsum.photos/200/300?random=5',
-          title: 'Recipe to try',
+          title: 'Taylor pig',
           subtitle: 'Followed by yeir_min',
         },
       ],
@@ -274,7 +294,9 @@
         {text: 'Copy Link'},
         {text: 'Embed'},
         {text: 'Cancel'},
-      ]
+      ],
+      snackbar: false,
+      text: 'You saved this post!'
     }),
   }
 </script>

@@ -24,6 +24,11 @@ const routes = [
     component: () => import('../views/Account.vue')
   },
   {
+    path: '/comment/:id',
+    name: 'Comment',
+    component: () => import('../views/Comment.vue')
+  },
+  {
     path: '/direct/inbox',
     name: 'directInbox',
     component: () => import('../views/Inbox.vue')

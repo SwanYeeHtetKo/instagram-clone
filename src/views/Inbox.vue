@@ -2,7 +2,7 @@
     <div>
         <v-card flat style="border:1px solid rgba(0,0,0,0.2)">
             <v-row no-gutters>
-                <v-col style="position:relative" cols="12" xs="12" sm="12" md="4" :style="[$vuetify.breakpoint.smAndDown ? {'border': 'none'}:{'border-right': '1px solid rgba(0,0,0,0.2)'}]">
+                <v-col style="position:relative" cols="12" xs="12" sm="12" md="4" :style="[$vuetify.breakpoint.smAndDown ? {'border': 'none','display': 'none'}:{'border-right': '1px solid rgba(0,0,0,0.2)'}]">
                     <v-btn class="text-lowercase ml-12 mt-3" text>swan_yee_htet_ko<v-icon>mdi-chevron-down</v-icon></v-btn>
                     <v-btn @click="choosePeople()" icon right absolute class="mt-3">
                         <v-icon>mdi-square-edit-outline</v-icon>
@@ -181,7 +181,7 @@ export default {
         dialog: false,
         groups: [
             //Note:  use for key => id (from api)
-            {user: 'pearl_twal',type: 'personal', date: '56 w'}
+            {user: [{title:'pearl_twal'}],type: 'personal', date: '56 w'}
         ],
         currentChatUser: []
     }),
@@ -205,7 +205,7 @@ export default {
         },
         goChatBox(item){
             this.checkBox = false;
-            this.currentChatUser = [{title:item.user}]
+            this.currentChatUser = item.user
             this.messages = []
         },
 
