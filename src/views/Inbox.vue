@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card  flat style="border:1px solid rgba(0,0,0,0.2);min-height:80vh">
+        <v-card  flat style="border:1px solid rgba(0,0,0,0.2);min-height:80vh;">
             <v-row no-gutters style="height:80vh">
                 <v-col style="position:relative;height:100%" cols="12" xs="12" sm="12" md="4" :style="[$vuetify.breakpoint.smAndDown ? {'border': 'none','display': 'none'}:{'border-right': '1px solid rgba(0,0,0,0.2)'}]">
                     <v-btn class="text-lowercase ml-12 mt-3" text>swan_yee_htet_ko<v-icon>mdi-chevron-down</v-icon></v-btn>
@@ -32,7 +32,7 @@
                     </v-list>
                 </v-col>
                 <v-col cols="12" xs="12" sm="12" md="8">
-                    <div v-if="currentChatUser.length != 0">
+                    <div v-if="currentChatUser.length != 0" style="position:relative;height:100%">
                         <v-list dense class="pa-0 ma-0">
                             <v-list-item dense>
                                 <v-list-item-avatar size="30">
@@ -58,7 +58,7 @@
                         </v-list>
                         <v-divider></v-divider>
                         <v-card-text v-show="!checkBox">
-                        <div v-chat-scroll :style="[ !checkBox ?{'min-height':'50vh','max-height': '50vh','overflow': 'auto'}:{'min-height': '50vh'}]">
+                        <div v-chat-scroll :style="[$vuetify.breakpoint.lgAndDown ? $vuetify.breakpoint.lgOnly ? $vuetify.breakpoint.xlOnly ? {'max-height':'40vh'} : {'max-height':'50vh'}: {'max-height':'55vh'}:{'max-height':'60vh'}]" style="overflow:auto">
                             <v-container id="scrolled-content">
                                 <div v-for="(item,index) in messages" :key="index">
                                     <div class="text-center">{{item.date}}</div>
@@ -80,11 +80,15 @@
                                 </div>  
                             </v-container>
                         </div>
-                        <div style="height:10px;">
+                        <div style="height:10px;" class="hidden-sm-and-down">
                         <div v-if="message" >{{status}}</div>
-                        </div>
+                        </div>                            
+                        </v-card-text>
+                        <div
+                        style="position:absolute;bottom:3px;width:100%"                        
+                        >
                             <v-textarea
-                            class="mt-3"
+                            class="mt-3 ml-3 mr-3"
                             rows="1"
                             no-resize
                             id="inputMessage"
@@ -135,7 +139,7 @@
                                 </div>
                             </template>
                             </v-textarea>
-                        </v-card-text>
+                        </div>
                     </div>
                     <div v-show="checkBox">
                         <v-row justify="center" align="center" class="mt-10">
@@ -227,7 +231,7 @@ export default {
 
         selectedUser(e){
             this.currentChatUser = []
-            if(e.length > 1){
+            if(e.length > 0){
                 this.groups.push({user: e, type: 'group', date: 'Today'});
             }else{
                 this.groups.push({user: e[0].title, type: 'personnal', date: 'Today'});
