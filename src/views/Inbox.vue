@@ -58,7 +58,7 @@
                         </v-list>
                         <v-divider></v-divider>
                         <v-card-text v-show="!checkBox">
-                        <div id="scroll" :style="[ !checkBox ?{'min-height':'300px','max-height': '300px','overflow': 'auto'}:{'min-height': '300px'}]">
+                        <div v-chat-scroll :style="[ !checkBox ?{'min-height':'300px','max-height': '300px','overflow': 'auto'}:{'min-height': '300px'}]">
                             <v-container id="scrolled-content">
                                 <div v-for="(item,index) in messages" :key="index">
                                     <div class="text-center">{{item.date}}</div>
@@ -79,10 +79,11 @@
                                     </div>
                                 </div>  
                             </v-container>
-                            <br/><br/><br/>
                         </div>
                         <div v-if="message">{{status}}</div>
-                            <v-text-field
+                            <v-textarea
+                            rows="1"
+                            no-resize
                             id="inputMessage"
                             v-model="message" 
                             hide-details="auto" 
@@ -90,26 +91,34 @@
                             label="Message..."
                             clearable
                             >
-                            <template v-slot:prepend-inner>
-                                <v-menu offset-x>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-icon
-                                        color="primary"
-                                        dark
-                                        v-bind="attrs"
-                                        v-on="on"
-                                        >
-                                        mdi-emoticon-happy-outline
-                                        </v-icon>
-                                    </template>
+                            <template v-slot:prepend-inner>                                
                                     <!-- https://www.npmjs.com/package/emoji-mart-vue -->
-                                    <picker
-                                        :showSearch="false"
-                                        :showCategories="false"
-                                        set="messenger"
-                                        :showPreview="false"
-                                        @select="addEmoji"
-                                    />
+                                <v-menu
+                                    :close-on-content-click="false"                                    
+                                    offset-y
+                                >
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                    color="primary"
+                                    dark
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    >
+                                    mdi-emoticon-happy-outline
+                                    </v-icon>
+                                </template>
+                                    <v-card
+                                        color="grey lighten-4"
+                                        flat
+                                    >
+                                        <picker
+                                            :showSearch="false"
+                                            :showCategories="false"
+                                            set="messenger"
+                                            :showPreview="false"
+                                            @select="addEmoji"
+                                        />
+                                    </v-card>
                                 </v-menu>
                             </template>
                             <template v-slot:append>
@@ -119,10 +128,10 @@
                                 <div v-else>
                                     <v-icon class="mr-3" @click="$refs.file.click()">mdi-image</v-icon>
                                     <input type="file" @change="fileData($event)" ref="file" style="display: none">
-                                    <v-icon @click="messages.push({user:'me' ,message: 'mdi-heart-outline',image: null, date: new Date()}),scrollToEnd()">mdi-heart-outline</v-icon>
+                                    <v-icon @click="messages.push({user:'me' ,message: 'mdi-heart-outline',image: null, date: new Date()})">mdi-heart-outline</v-icon>
                                 </div>
                             </template>
-                            </v-text-field>
+                            </v-textarea>
                         </v-card-text>
                     </div>
                     <div v-show="checkBox">
@@ -147,6 +156,10 @@
     </div>
 </template>
 <script>
+import Vue from 'vue'
+// https://github.com/theomessin/vue-chat-scroll
+import VueChatScroll from 'vue-chat-scroll'
+Vue.use(VueChatScroll)
 import { Picker } from 'emoji-mart-vue'
 import ChoosePeopleDialog from '@/components/message/ChoosePeopleDialog'
 export default {
@@ -156,20 +169,12 @@ export default {
     },
 
     data:() =>({
-        winHeight: window.innerHeight * 2 + "rem",
-        container: null,
-        elem: null,
-        scrollTop: 400,
+        openEmoji: false,
         emojiData: null,
         selectedItem: null,
         checkBox: true,
         messages: [
             // Note: add null for date if user send same date Use some function eg.(map)
-            {user:'friend', message:'hi',image: null, date: 'November 3, 2019'},
-            {user:'me',message:'hello',image: null, date: null},
-            {user:'friend', message:'how are you?',image: null, date: null},
-            {user:'me', message:'i\'m fine bro!',image: null, date: null},
-            {user:'me', message:'Hello baby',image: null, date: null},
         ],
         message:null,
         status: null,
@@ -206,14 +211,7 @@ export default {
 
         sendMessage(){
             this.messages.push({user: 'me', message: this.message,image: null, date: new Date()});
-            this.scrollToEnd();
             this.message = null
-        },
-
-        scrollToEnd() {    	
-            let scroll = this.$el.querySelector("#scroll");
-            scroll.scrollTop = scroll.scrollHeight;
-            
         },
 
         choosePeople(){
@@ -241,7 +239,7 @@ export default {
         fileData(e){
             // you can change file to base64 format
             this.messages.push({user: 'me',message:null,image: URL.createObjectURL(e.target.files[0]),date: new Date()})
-            this.scrollToEnd();
+            
         }
     }
 }

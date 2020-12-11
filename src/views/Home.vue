@@ -95,7 +95,7 @@
             <v-btn icon absolute right>
               <v-icon>mdi-content-save-outline</v-icon>
             </v-btn>
-            <p class="ml-2 font-weight-bold"><span v-if="item.liked">0</span><span v-else>1</span> likes</p>
+            <p class="ml-2 font-weight-bold" v-if="!item.liked"><span v-if="item.liked">0</span><span v-else>1</span> likes</p>
             <div class="ml-2 caption">22 MIN AGO</div>
           </v-card-text>
           <v-divider></v-divider>
