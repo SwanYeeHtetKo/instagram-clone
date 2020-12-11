@@ -58,7 +58,7 @@
                         </v-list>
                         <v-divider></v-divider>
                         <v-card-text v-show="!checkBox">
-                        <div v-chat-scroll :style="[ !checkBox ?{'min-height':'330px','max-height': '330px','overflow': 'auto'}:{'min-height': '330px'}]">
+                        <div v-chat-scroll :style="[ !checkBox ?{'min-height':'50vh','max-height': '50vh','overflow': 'auto'}:{'min-height': '50vh'}]">
                             <v-container id="scrolled-content">
                                 <div v-for="(item,index) in messages" :key="index">
                                     <div class="text-center">{{item.date}}</div>
