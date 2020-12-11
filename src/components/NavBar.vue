@@ -28,17 +28,19 @@
             label="Search" 
             dense 
             class="hidden-sm-and-down">
-              <template v-slot:item="{ item }">
-                <v-list-item-avatar
-                  color="indigo"
-                  class="headline font-weight-light white--text"
-                >
-                  <v-img :src="item.avatar"/>
-                </v-list-item-avatar>
-                <v-list-item-content>
-                  <v-list-item-title v-text="item.name"></v-list-item-title>
-                  <v-list-item-subtitle v-text="item.userName"></v-list-item-subtitle>
-                </v-list-item-content>
+              <template  v-slot:item="{ item }">
+                <div class="d-flex" @click="goProfileFromSearch(item.name)">
+                  <v-list-item-avatar
+                    color="indigo"
+                    class="headline font-weight-light white--text"
+                  >
+                    <v-img :src="item.avatar"/>
+                  </v-list-item-avatar>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.name"></v-list-item-title>
+                    <v-list-item-subtitle v-text="item.userName"></v-list-item-subtitle>
+                  </v-list-item-content>
+                </div>
               </template>
             </v-autocomplete>
         </v-responsive>
@@ -351,6 +353,13 @@ export default {
 
     login(){
       this.switchLogin = true;
+    },
+
+    goProfileFromSearch(name){
+      this.$router.push('/guest/'+name),
+      this.users = [],
+      this.user= null,
+      this.search = null
     }
   
   }

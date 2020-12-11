@@ -61,7 +61,7 @@
               </template>
              </v-img>
             </v-avatar>
-            <v-toolbar-title class="ml-5">{{item.userName}}</v-toolbar-title>
+            <v-toolbar-title @click="$router.push('/guest/'+item.userName)" class="ml-5">{{item.userName}}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon @click="postSettings = true">
               <v-icon>mdi-dots-horizontal</v-icon>
@@ -114,7 +114,7 @@
 
         <!-- profile -->
         <v-list dense two-line color="grey lighten-3" style="position:fixed;" width="440">
-          <v-list-item link>
+          <v-list-item @click="$router.push('/profile')">
             <v-list-item-avatar size="50">
               <v-img class="grey lighten-2" aspect-ratio="1"
                   lazy-src="@/assets/avatar.jpg" src="@/assets/avatar.jpg">
@@ -158,7 +158,7 @@
             </div>
             
             
-              <v-list-item dense link v-for="(item) in items"
+              <v-list-item dense @click="$router.push('/guest/'+item.title)" v-for="(item) in items"
                 :key="item.title"
               >
                 <v-list-item-avatar>
@@ -185,7 +185,7 @@
                   <v-list-item-subtitle>{{item.subtitle}}</v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-action>
-                <v-btn text class="text-capitalize" color="primary"> Follow</v-btn>
+                <v-btn text class="text-capitalize" color="primary" @click.stop="item.follow =!item.follow"><span v-if="item.follow">Following</span> <span v-else>Follow</span></v-btn>
               </v-list-item-action>
               </v-list-item>
         </v-list>
@@ -248,42 +248,47 @@
       postSettings: false,
       liked: false,
       newsFeedData: [
-        {userName: 'John Smith', liked: true},
-        {userName: 'Christ', liked: true},
-        {userName: 'Rose', liked: true},
-        {userName: 'Kyaw Kyaw', liked: true},
-        {userName: 'Aung Aunng', liked: true},
-        {userName: 'Swan Yee Htet Ko', liked: true},
-        {userName: 'Kay Zin Thet', liked: true},
-        {userName: 'Thurein Mg Mg', liked: true},
-        {userName: 'Sabal Phyu', liked: true},
-        {userName: 'Hein Thu', liked: true}
+        {userName: 'john_smith', liked: true},
+        {userName: 'christ', liked: true},
+        {userName: 'rose', liked: true},
+        {userName: 'kyaw_kyaw', liked: true},
+        {userName: 'aung_aunng', liked: true},
+        {userName: 'swan_yee_htet_ko', liked: true},
+        {userName: 'kay_zin_thet', liked: true},
+        {userName: 'thurein_mg_Mg', liked: true},
+        {userName: 'sabal_Phyu', liked: true},
+        {userName: 'hein_Thu', liked: true}
       ],
       items: [
         {
           avatar: 'https://picsum.photos/200/300?random=1',
-          title: 'Kyaw Gyi',
+          title: 'kyaw_gyi',
           subtitle: `Follows you`,
+          follow: false,
         },
         {
           avatar: 'https://picsum.photos/200/300?random=2',
-          title: 'Justin Viber',
+          title: 'justin_viber',
           subtitle: `New to instagram`,
+          follow: false,
         },
         {
           avatar: 'https://picsum.photos/200/300?random=3',
-          title: 'Westlife',
+          title: 'westlife',
           subtitle: 'Followed by sabalphyu98',
+          follow: false,
         },
         {
           avatar: 'https://picsum.photos/200/300?random=4',
-          title: 'Two Direction',
+          title: 'two_direction',
           subtitle: 'Suggested for you',
+          follow: false,
         },
         {
           avatar: 'https://picsum.photos/200/300?random=5',
-          title: 'Taylor pig',
+          title: 'taylor_pig',
           subtitle: 'Followed by yeir_min',
+          follow: false,
         },
       ],
       postSettingsList:[
