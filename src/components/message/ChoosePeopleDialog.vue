@@ -58,7 +58,7 @@
                         
                         <v-list dense two-line  >
                             
-                            <v-list-item dense  v-for="(item) in items"
+                            <v-list-item dense  v-for="(item) in filterItems"
                                 :key="item.title"
                             >
                                 <v-list-item-avatar>
@@ -103,12 +103,20 @@ export default {
     },
     
     data:() =>({
-        search: null,
+        search: '',
         noSelectedUser: true,
         selectedUser: [],
-        items: [],
+        items: []
         
     }),
+
+    computed:{
+        filterItems(){
+            return this.items.filter(item => {
+                return item.title.toLowerCase().includes(this.search.toLowerCase())
+            })
+        }
+    },
 
     watch:{
         selectedUser(val){
@@ -117,7 +125,8 @@ export default {
             }else{
                 return this.noSelectedUser = true;
             }
-        }
+        },
+        
     },
 
     mounted(){
@@ -136,7 +145,7 @@ export default {
                     {
                         id: 1,
                         avatar: 'https://picsum.photos/200/300?random=1',
-                        title: 'Brunch this weekend?',
+                        title: 'Brunch this weekend',
                         subtitle: `Follows you`,
                         select: false,
                     },
