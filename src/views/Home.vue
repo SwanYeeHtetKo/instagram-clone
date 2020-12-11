@@ -61,7 +61,7 @@
               </template>
              </v-img>
             </v-avatar>
-            <v-toolbar-title @click="$router.push('/guest/'+item.userName)" class="ml-5">{{item.userName}}</v-toolbar-title>
+            <v-toolbar-title style="cursor:pointer" @click="$router.push('/guest/'+item.userName)" class="ml-5">{{item.userName}}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon @click="postSettings = true">
               <v-icon>mdi-dots-horizontal</v-icon>
@@ -96,13 +96,18 @@
               <v-icon>mdi-content-save-outline</v-icon>
             </v-btn>
             <p class="ml-2 font-weight-bold" v-if="!item.liked"><span v-if="item.liked">0</span><span v-else>1</span> likes</p>
+            <div v-show="item.comments" v-for="(cmt,i1) in item.comments" :key="i1">
+              <!-- if auth user go to profile. if not go to guest route -->
+              <b style="cursor:pointer" @click="$router.push('/profile')">{{cmt.userName}}</b><span class="ml-3">{{cmt.description}}</span>
+            </div>
             <div class="ml-2 caption">22 MIN AGO</div>
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-textarea rounded label="Add a comment" rows="1" no-resize single-line hide-details="auto">
+            <v-textarea rounded label="Add a comment" v-model="item.comment" rows="1" no-resize single-line hide-details="auto">
               <template v-slot:append-outer>
-                <v-btn text>Post</v-btn>
+                <!-- use user name Auth user -->
+                <v-btn @click="item.comments.push({userName: 'swan_yee_htet_ko',description: item.comment, date: new Date()}),item.comment = []" text>Post</v-btn>
               </template>
             </v-textarea>
           </v-card-actions>
@@ -248,16 +253,16 @@
       postSettings: false,
       liked: false,
       newsFeedData: [
-        {userName: 'john_smith', liked: true},
-        {userName: 'christ', liked: true},
-        {userName: 'rose', liked: true},
-        {userName: 'kyaw_kyaw', liked: true},
-        {userName: 'aung_aunng', liked: true},
-        {userName: 'swan_yee_htet_ko', liked: true},
-        {userName: 'kay_zin_thet', liked: true},
-        {userName: 'thurein_mg_Mg', liked: true},
-        {userName: 'sabal_Phyu', liked: true},
-        {userName: 'hein_Thu', liked: true}
+        {userName: 'john_smith', liked: true,comments: [],comment: null},
+        {userName: 'christ', liked: true,comments: [],comment: null},
+        {userName: 'rose', liked: true,comments: [],comment: null},
+        {userName: 'kyaw_kyaw', liked: true,comments: [],comment: null},
+        {userName: 'aung_aunng', liked: true,comments: [],comment: null},
+        {userName: 'swan_yee_htet_ko', liked: true,comments: [],comment: null},
+        {userName: 'kay_zin_thet', liked: true,comments: [],comment: null},
+        {userName: 'thurein_mg_Mg', liked: true,comments: [],comment: null},
+        {userName: 'sabal_Phyu', liked: true,comments: [],comment: null},
+        {userName: 'hein_Thu', liked: true,comments: [],comment: null}
       ],
       items: [
         {
