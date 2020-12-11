@@ -1,8 +1,8 @@
 <template>
     <div>
-        <v-card flat style="border:1px solid rgba(0,0,0,0.2)">
-            <v-row no-gutters>
-                <v-col style="position:relative" cols="12" xs="12" sm="12" md="4" :style="[$vuetify.breakpoint.smAndDown ? {'border': 'none','display': 'none'}:{'border-right': '1px solid rgba(0,0,0,0.2)'}]">
+        <v-card  flat style="border:1px solid rgba(0,0,0,0.2);min-height:80vh">
+            <v-row no-gutters style="height:80vh">
+                <v-col style="position:relative;height:100%" cols="12" xs="12" sm="12" md="4" :style="[$vuetify.breakpoint.smAndDown ? {'border': 'none','display': 'none'}:{'border-right': '1px solid rgba(0,0,0,0.2)'}]">
                     <v-btn class="text-lowercase ml-12 mt-3" text>swan_yee_htet_ko<v-icon>mdi-chevron-down</v-icon></v-btn>
                     <v-btn @click="choosePeople()" icon right absolute class="mt-3">
                         <v-icon>mdi-square-edit-outline</v-icon>
@@ -58,7 +58,7 @@
                         </v-list>
                         <v-divider></v-divider>
                         <v-card-text v-show="!checkBox">
-                        <div v-chat-scroll :style="[ !checkBox ?{'min-height':'300px','max-height': '300px','overflow': 'auto'}:{'min-height': '300px'}]">
+                        <div v-chat-scroll :style="[ !checkBox ?{'min-height':'330px','max-height': '330px','overflow': 'auto'}:{'min-height': '330px'}]">
                             <v-container id="scrolled-content">
                                 <div v-for="(item,index) in messages" :key="index">
                                     <div class="text-center">{{item.date}}</div>
@@ -80,8 +80,11 @@
                                 </div>  
                             </v-container>
                         </div>
-                        <div v-if="message">{{status}}</div>
+                        <div style="height:10px;">
+                        <div v-if="message" >{{status}}</div>
+                        </div>
                             <v-textarea
+                            class="mt-3"
                             rows="1"
                             no-resize
                             id="inputMessage"
