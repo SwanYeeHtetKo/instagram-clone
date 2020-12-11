@@ -58,8 +58,8 @@
                     color="grey lighten-5"
                   ></v-progress-circular>
                 </v-row>
-              </template>
-             </v-img>
+              </template>                
+             </v-img>             
             </v-avatar>
             <v-toolbar-title style="cursor:pointer" @click="$router.push('/guest/'+item.userName)" class="ml-5">{{item.userName}}</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -67,7 +67,10 @@
               <v-icon>mdi-dots-horizontal</v-icon>
             </v-btn>
           </v-toolbar>
-          <v-img class="grey lighten-2" contain :lazy-src="`https://picsum.photos/500/300?random=${n * 4 + 10}`" :src="`https://picsum.photos/500/300?random=${n * 4 + 10}`">
+
+          <v-img v-if="item.photo.length == 1" class="grey lighten-2" contain 
+          :lazy-src="`https://picsum.photos/500/300?random=${item.photo[0].img * 4 + 10}`" 
+          :src="`https://picsum.photos/500/300?random=${item.photo[0].img * 4 + 10}`">          
           <template v-slot:placeholder>
             <v-row
               class="fill-height ma-0"
@@ -81,6 +84,15 @@
             </v-row>
           </template>
           </v-img>
+          <v-carousel height="400" v-else hide-delimiters>
+            <v-carousel-item
+              contain
+              v-for="(multiPhoto,i) in item.photo"
+              :key="i"
+              :src="`https://picsum.photos/200/300?random=${multiPhoto.img * 2}`"
+            ></v-carousel-item>
+          </v-carousel>
+
           <v-card-text>
             <v-btn icon @click.stop="item.liked =! item.liked">
               <v-icon v-if="item.liked">mdi-heart-outline</v-icon>
@@ -253,16 +265,16 @@
       postSettings: false,
       liked: false,
       newsFeedData: [
-        {userName: 'john_smith', liked: true,comments: [],comment: null},
-        {userName: 'christ', liked: true,comments: [],comment: null},
-        {userName: 'rose', liked: true,comments: [],comment: null},
-        {userName: 'kyaw_kyaw', liked: true,comments: [],comment: null},
-        {userName: 'aung_aunng', liked: true,comments: [],comment: null},
-        {userName: 'swan_yee_htet_ko', liked: true,comments: [],comment: null},
-        {userName: 'kay_zin_thet', liked: true,comments: [],comment: null},
-        {userName: 'thurein_mg_Mg', liked: true,comments: [],comment: null},
-        {userName: 'sabal_Phyu', liked: true,comments: [],comment: null},
-        {userName: 'hein_Thu', liked: true,comments: [],comment: null}
+        {photo: [{img: 1}],userName: 'john_smith', liked: true,comments: [],comment: null},
+        {photo: [{img: 10},{img: 11}],userName: 'christ', liked: true,comments: [],comment: null},
+        {photo: [{img: 2},{img: 16},{img: 17}],userName: 'rose', liked: true,comments: [],comment: null},
+        {photo: [{img: 3}],userName: 'kyaw_kyaw', liked: true,comments: [],comment: null},
+        {photo: [{img: 4}],userName: 'aung_aunng', liked: true,comments: [],comment: null},
+        {photo: [{img: 5},{img: 12}],userName: 'swan_yee_htet_ko', liked: true,comments: [],comment: null},
+        {photo: [{img: 6},{img: 13},{img: 14},{img: 15}],userName: 'kay_zin_thet', liked: true,comments: [],comment: null},
+        {photo: [{img: 7}],userName: 'thurein_mg_Mg', liked: true,comments: [],comment: null},
+        {photo: [{img: 8}],userName: 'sabal_Phyu', liked: true,comments: [],comment: null},
+        {photo: [{img: 9}],userName: 'hein_Thu', liked: true,comments: [],comment: null}
       ],
       items: [
         {
