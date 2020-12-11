@@ -2,7 +2,7 @@
     <div>
         <v-row class="hidden-md-and-down">
             <v-col cols="12" xs="12" sm="12" md="12" lg="12">
-                <div class="d-flex offset-lg-1">
+                <div class="d-flex offset-lg-1 offset-xl-3">
                     <div>
                         <div style="position:relative">
                             <v-img style="z-index:1" src="@/assets/mobile.png"  ></v-img>
@@ -139,7 +139,7 @@ export default {
 
     methods:{
         goTosignUp(){
-            this.$router.push('/account')
+            this.$router.push('/signUp')
         }
     }
 }

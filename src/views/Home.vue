@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <v-row>
-      <v-col cols="12" xs="12" sm="12" md="12" lg="7">
+      <v-col cols="12" xs="12" sm="12" md="12" lg="7" xl="8">
         <!-- Story -->
         <v-card style="border: 1px solid rgba(0,0,0,0.2)" flat>
           <v-card-text>
@@ -110,7 +110,7 @@
       </v-col>
 
       <!-- right side bar -->
-      <v-col cols="12" xs="12" sm="12" md="12" lg="5" >
+      <v-col cols="12" xs="12" sm="12" md="12" lg="5" xl="3" class="offset-xl-1">
 
         <!-- profile -->
         <v-list dense two-line color="grey lighten-3" style="position:fixed;" width="440">

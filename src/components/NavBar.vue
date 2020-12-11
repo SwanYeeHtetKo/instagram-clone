@@ -342,11 +342,10 @@ export default {
         this.$store.dispatch('takeTabId',{id: 2});
         this.$router.push('/profile')
       }
-      else if(e == '/switchAccount'){
+      else if(e == '/account'){
         this.$store.dispatch('takeAccountId',{id: 0})
         this.$router.push('/account');
       }else{
-        this.$store.dispatch('takeAccountId',{id: 1})
         this.$router.push(e);
       }
     },
