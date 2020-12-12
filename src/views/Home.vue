@@ -86,11 +86,26 @@
           </v-img>
           <v-carousel height="400" v-else hide-delimiters>
             <v-carousel-item
-              contain
+              reverse-transition="fade-transition"
+              transition="fade-transition"
               v-for="(multiPhoto,i) in item.photo"
               :key="i"
+              :lazy-src="`https://picsum.photos/200/300?random=${multiPhoto.img * 2}`"
               :src="`https://picsum.photos/200/300?random=${multiPhoto.img * 2}`"
-            ></v-carousel-item>
+            >
+            <template v-slot:placeholder>
+            <v-row
+              class="fill-height ma-0"
+              align="center"
+              justify="center"
+            >
+              <v-progress-circular
+                indeterminate
+                color="grey lighten-5"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+            </v-carousel-item>
           </v-carousel>
 
           <v-card-text>
@@ -270,9 +285,9 @@
         {photo: [{img: 2},{img: 16},{img: 17}],userName: 'rose', liked: true,comments: [],comment: null},
         {photo: [{img: 3}],userName: 'kyaw_kyaw', liked: true,comments: [],comment: null},
         {photo: [{img: 4}],userName: 'aung_aunng', liked: true,comments: [],comment: null},
-        {photo: [{img: 5},{img: 12}],userName: 'swan_yee_htet_ko', liked: true,comments: [],comment: null},
-        {photo: [{img: 6},{img: 13},{img: 14},{img: 15}],userName: 'kay_zin_thet', liked: true,comments: [],comment: null},
-        {photo: [{img: 7}],userName: 'thurein_mg_Mg', liked: true,comments: [],comment: null},
+        {photo: [{img: 5},{img: 12},{img: 18}],userName: 'kay_zin_thet', liked: true,comments: [],comment: null},
+        {photo: [{img: 6},{img: 13},{img: 14},{img: 15}],userName: 'a_chay_ma', liked: true,comments: [],comment: null},
+        {photo: [{img: 7}],userName: 'thurein_mg_mg', liked: true,comments: [],comment: null},
         {photo: [{img: 8}],userName: 'sabal_Phyu', liked: true,comments: [],comment: null},
         {photo: [{img: 9}],userName: 'hein_Thu', liked: true,comments: [],comment: null}
       ],

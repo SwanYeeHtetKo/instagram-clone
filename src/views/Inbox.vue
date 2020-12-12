@@ -80,13 +80,16 @@
                                 </div>  
                             </v-container>
                         </div>
-                        <div style="height:10px;" class="hidden-sm-and-down">
-                        <div v-if="message" >{{status}}</div>
-                        </div>                            
+                                                    
                         </v-card-text>
                         <div
                         style="position:absolute;bottom:3px;width:100%"                        
                         >
+                        <div style="height:10px;" class="hidden-sm-and-down">                           
+                            <div v-if="message" class="ml-5">
+                                {{status}}
+                            </div>
+                        </div>
                             <v-textarea
                             class="mt-3 ml-3 mr-3"
                             rows="1"
@@ -190,7 +193,7 @@ export default {
             //Note:  use for key => id (from api)
             {user: [{title:'pearl_twal'}],type: 'personal', date: '56 w'}
         ],
-        currentChatUser: []
+        currentChatUser: [],
     }),
 
     watch:{
